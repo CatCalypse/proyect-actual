@@ -13,7 +13,7 @@
 @endif
 
 
-<div id="register_form">
+<div id="register-form">
 <form method="post" action="/register"/>
     @csrf
     <div>

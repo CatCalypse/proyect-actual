@@ -23,6 +23,14 @@ class DatabaseSeeder extends Seeder
 
 
         DB::table('usuarios')->insert([
+            'nombre' => 'admin',
+            'apellidos' => 'admin',
+            'correo' => 'admin@mail',
+            'rol' => 1,
+            'usuario' => 'admin',
+            'password' => Hash::make('1234'),
+            'activo' => true,
+        ],[
             'nombre' => 'test',
             'apellidos' => 'test',
             'correo' => 'test@test',

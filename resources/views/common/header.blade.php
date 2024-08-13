@@ -1,3 +1,5 @@
+@use('Illuminate\Support\Facades\Auth')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,22 +8,26 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="https://9000-idx-proyect-actual-1722536483066.cluster-rz2e7e5f5ff7owzufqhsecxujc.cloudworkstations.dev/css/header.css">
-
 </head>
 <body>
     <header>
         <div>
+        
             @if(Auth::check())
-                <?php
-                    echo Auth::user();
-
-                php?>
-                <div id="control-header">
-                    <a href="admin_users"></a>
-    
-                </div>
+                @if(getRole() != 3)
+                    <div id="control-header">
+                        <a href="redactar" style="color:white">Redactar Noticias</a>
+                        @if(getRole() == 1)
+                            <a href="admin-usuarios">Usuarios</a>
+                            <a href="admin-noticias">Noticias</a>
+                        @endif
+                    </div>
+                @endif
                 
-                <a href="/logout">LogOut</a>
+                <div id="header-content">
+                    <a href="/logout">LogOut</a>
+                </div>
+
             @endif
 
             @if(!Auth::check())

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return view('index');
@@ -36,3 +38,10 @@ Route::post('/register', [UserController::class, 'register']);
 Route::get('/test', function () {
     return view('common/header');
 });
+
+
+//admin
+
+Route::get('/admin-usuarios', function () {
+    return view('admin/usuarios');
+})->middleware('AdminAuthenticate');
