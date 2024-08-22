@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         DB::table('roles')->insert([
-            ['rol' => 'administrador',],
-            ['rol' => 'escritor',],
-            ['rol' => 'usuario',],
+            ['rol' => 'Administrador',],
+            ['rol' => 'Escritor',],
+            ['rol' => 'Usuario',],
         ]);
 
 
-        DB::table('usuarios')->insert([
+        DB::table('usuarios')->insert([[
             'nombre' => 'admin',
             'apellidos' => 'admin',
             'correo' => 'admin@mail',
@@ -38,6 +38,6 @@ class DatabaseSeeder extends Seeder
             'usuario' => 'test',
             'password' => Hash::make('test'),
             'activo' => true,
-        ]);
+        ]]);
     }
 }

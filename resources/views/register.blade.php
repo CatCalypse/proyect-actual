@@ -1,3 +1,8 @@
+@extends("layouts.layout")
+
+@section("title", "NHdiario")
+
+@section ("content")
 <h1>Registrarse</h1>
 
 @if ($errors->any())
@@ -41,9 +46,14 @@
         <input type="text" name="mail" id="mail">
     </div>
 
+    <div>
+        <label for="remember">Mantener sesión</label>
+        <input type="checkbox" name="remember">
+    </div>
 
     <div>
         <input type="submit" value="Register">
     </div>
 </form>
 </div>
+@endsection
