@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+// Controladores
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NewsController;
 
 // Custom Middleware
 use App\Http\Middleware\IsAdmin;
@@ -47,7 +51,7 @@ Route::get('/test', function () {
 //auth
 
 Route::get('/redactar', function () {
-    return view('admin/redactar');
+    return view('admin.redactar');
 })->middleware(CanWrite::class);
 
 // admin
@@ -57,7 +61,11 @@ Route::get('/admin/usuarios', function () {
 })->middleware(IsAdmin::class);
 
 Route::get('/admin/noticias', function () {
-    return view('admin/noticias');
+    return view('admin.noticias.noticias');
+})->middleware(IsAdmin::class);
+
+Route::get('/admin/redactar', function () {
+    return view('admin.redactar.redactar');
 })->middleware(IsAdmin::class);
 
 // admin - usuarios
@@ -75,3 +83,8 @@ Route::post('/create', [UserController::class, 'create'])->middleware([IsAdmin::
 Route::post('/edit', [UserController::class, 'edit'])->middleware([IsAdmin::class]);
 
 Route::get('/delete', [UserController::class, 'delete'])->middleware([IsAdmin::class]);
+
+
+//admin - noticias
+
+Route::post('/redactar', [NewsController::class, 'create'])->middleware([IsAdmin::class]);

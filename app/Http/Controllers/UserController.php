@@ -94,7 +94,6 @@ class UserController extends Controller
             'nombre' => 'required',
             'apellido' => 'required',
             'user' => ['required'],
-            'password' => 'nullable',
             'mail' => ['required'],
             'rol' => 'required',
             'id' => 'required'
@@ -108,31 +107,33 @@ class UserController extends Controller
             $activo = 0;
         }
 
-        // if () {
-        //     // exists
-        // }
-        
 
-        if($request->has('password')){
-            $affected = DB::table('usuarios')
-            ->where('id', $request->input('id'))
-            ->update(['nombre' => $request->input('nombre'),
-            'apellidos' => $request->input('apellido'),
-            'usuario' => $request->input('user'),
-            'password' => Hash::make($request->input('password')),
-            'rol' => $request->input('rol'),
-            'correo' => $request->input('mail'),
-            'activo' => $activo]);
-
+        if(!$this->isLastAdmin($request->input('id'))){
+            if($request->has('password')){
+                $affected = DB::table('usuarios')
+                ->where('id', $request->input('id'))
+                ->update(['nombre' => $request->input('nombre'),
+                'apellidos' => $request->input('apellido'),
+                'usuario' => $request->input('user'),
+                'password' => Hash::make($request->input('password')),
+                'rol' => $request->input('rol'),
+                'correo' => $request->input('mail'),
+                'activo' => $activo]);
+    
+            }else{
+                $affected = DB::table('usuarios')
+                ->where('id', $request->input('id'))
+                ->update(['nombre' => $request->input('nombre'),
+                'apellidos' => $request->input('apellido'),
+                'usuario' => $request->input('user'),
+                'rol' => $request->input('rol'),
+                'correo' => $request->input('mail'),
+                'activo' => $activo]);
+            }
         }else{
-            $affected = DB::table('usuarios')
-            ->where('id', $request->input('id'))
-            ->update(['nombre' => $request->input('nombre'),
-            'nombre' => $request->input('nombre'),
-            'nombre' => $request->input('nombre'),
-            'nombre' => $request->input('nombre'),
-            'nombre' => $request->input('nombre')]);
+            return redirect ('/admin/usuarios')->withErrors(['message'=> 'No se puede editar al útlimo administrador activo'], 'status');
         }
+
 
         return redirect ('/admin/usuarios')->withErrors(['message'=> 'Usuario editado correctamente'], 'status');
     }

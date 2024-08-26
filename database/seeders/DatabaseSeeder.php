@@ -39,5 +39,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('test'),
             'activo' => true,
         ]]);
+
+
+
+        DB::table('categorias')->insert([
+            ['categoria' => 'Local',],
+            ['categoria' => 'Nacional',],
+            ['categoria' => 'Internacional',],
+        ]);
+
     }
 }

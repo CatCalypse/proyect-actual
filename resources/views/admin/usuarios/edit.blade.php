@@ -61,10 +61,10 @@
 
         <select name="rol" id="rol">
             @foreach(getAllRoles() as $rol)
-                @if($datos->rol == $rol->rol)
-                    <option value="{{$rol->id}}" checked>{{ $rol->rol}}</option>
+                @if($datos->rol == $rol->id)
+                    <option value="{{$rol->id}}" selected>{{ $rol->rol}}</option>
                 @else
-                <option value="{{$rol->id}}">{{ $rol->rol}}</option>
+                    <option value="{{$rol->id}}">{{ $rol->rol}}</option>
                 @endif
             @endforeach
         </select>

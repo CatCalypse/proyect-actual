@@ -20,7 +20,7 @@
                         <td>{{ $user->correo }}</td>
                         <td>{{ $user->nombre }}</td>
                         <td>{{ $user->apellidos }}</td>
-                        <td>{{ rolText(1) }}</td>
+                        <td>{{ rolText($user->rol) }}</td>
                         @if($user->activo == 1)
                             <td>Activo</td>
                         @else

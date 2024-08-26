@@ -34,4 +34,10 @@ use Illuminate\Support\Facades\DB;
         return view('paginado.usuarios', compact('users'));
     }
 
+    function getCategorias(){
+        $categorias = DB::table('categorias')->get();
+
+        return $categorias;
+    }
+
 
