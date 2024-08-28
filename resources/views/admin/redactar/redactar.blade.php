@@ -20,9 +20,8 @@
         </select>
     </div>
 
-    <div>
-        <textarea id="text-editor" name="text-editor" hidden></textarea>
-    </div>
+
+    <textarea id="text-editor" name="text-editor" hidden></textarea>
 
     <div>
         <input type="submit" value="Publicar">
@@ -37,9 +36,7 @@
 <script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
 
 <script type="module">
-    document.addEventListener("DOMContentLoaded", (event) => {
-        Laraberg.init('text-editor')
-    });
+    Laraberg.init('text-editor', { height: '500px', laravelFilemanager: true });
 </script>
 
 @endsection

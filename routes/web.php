@@ -50,9 +50,7 @@ Route::get('/test', function () {
 
 //auth
 
-Route::get('/redactar', function () {
-    return view('admin.redactar');
-})->middleware(CanWrite::class);
+
 
 // admin
 
@@ -88,3 +86,6 @@ Route::get('/delete', [UserController::class, 'delete'])->middleware([IsAdmin::c
 //admin - noticias
 
 Route::post('/redactar', [NewsController::class, 'create'])->middleware([IsAdmin::class]);
+
+
+// noticias - dinamico
