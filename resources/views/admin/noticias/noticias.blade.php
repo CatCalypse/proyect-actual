@@ -4,5 +4,9 @@
 
 @section ("content")
 
+<div>
+    {{ paginateNoticias() }}
+</div>
+
 @endsection
 

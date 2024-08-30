@@ -42,7 +42,7 @@ return new class extends Migration
             $table->unsignedMediumInteger('ano');
             $table->unsignedMediumInteger('mes');
             $table->unsignedBigInteger('escritor');
-            $table->string('slug', length: 175)->unique();
+            $table->string('slug', length: 150)->unique();
             $table->string('multimedia', length: 200)->unique();
             $table->foreign('categoria')->references('id')->on('categorias');
             $table->foreign('escritor')->references('id')->on('usuarios');

@@ -40,4 +40,18 @@ use Illuminate\Support\Facades\DB;
         return $categorias;
     }
 
+    function paginateNoticias(){
+        $news = DB::table('noticias')->paginate(10);
+        return view('paginado.noticias', compact('news'));
+    }
+
+    function paginateBuscador(){
+
+    }
+
+    function getNewsData($slug){
+        $decodedData = json_decode($data);
+
+    }
+
 

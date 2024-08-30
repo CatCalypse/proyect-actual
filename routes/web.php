@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UploadController;
 
 // Custom Middleware
 use App\Http\Middleware\IsAdmin;
@@ -63,7 +64,7 @@ Route::get('/admin/noticias', function () {
 })->middleware(IsAdmin::class);
 
 Route::get('/admin/redactar', function () {
-    return view('admin.redactar.redactar');
+    return view('admin.noticias.redactar');
 })->middleware(IsAdmin::class);
 
 // admin - usuarios
@@ -84,8 +85,24 @@ Route::get('/delete', [UserController::class, 'delete'])->middleware([IsAdmin::c
 
 
 //admin - noticias
+Route::get('/admin/noticias/editar', [NewsController::class, 'editorContent'])->middleware(IsAdmin::class);
 
-Route::post('/redactar', [NewsController::class, 'create'])->middleware([IsAdmin::class]);
+
+
+Route::post('/redactar', [NewsController::class, 'create'])->middleware([CanWrite::class]);
+
+Route::post('/edit-noticias', [NewsController::class, 'edit'])->middleware([CanWrite::class]);
+
+Route::post('/upload-image', [UploadController::class, 'upload'])->name('upload-image');
+
 
 
 // noticias - dinamico
+
+Route::get('/noticias/{categoria}/{ano}/{mes}/{slug}', function ($categoria, $ano, $mes, $slug) {
+    $noticia = file_get_contents(resource_path() . "/noticias/{$categoria}/{$ano}/{$mes}/{$slug}/noticia.json");
+
+    return view('showNoticias', [
+        'noticia' => $noticia
+    ]);
+});

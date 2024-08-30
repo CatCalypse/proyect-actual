@@ -11,38 +11,28 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class NewsController extends Controller
 {
     public function create(Request $request){
         $request->validate([
+            'titular' => 'required',
             'categoria' => 'required',
-            'text-editor' => 'required',
+            'editorData' => 'required',
         ]);
 
+        $titular = $request->input('titular');
         $categoria = DB::table('categorias')->where('id', $request->input('categoria'))->first();
 
-        $content =preg_replace("~<!--(.*?)-->~s", "", $request->input('text-editor'));
 
-        $dom = new \DOMDocument();
-        @$dom->loadHTML($content);
-    
-        $headers = [];
-        for ($i = 1; $i <= 6; $i++) {
-            foreach ($dom->getElementsByTagName("h$i") as $header) {
-                $headers[] = [
-                    'level' => $i,
-                    'text' => $header->textContent,
-                ];
-            }
-        }
+        $basePath = resource_path() . '/noticias';
+        $path = $basePath . '/' . Str::slug($categoria->categoria);
 
-        $basePath = public_path().'/noticias/';
-        $path = $basePath . $categoria->categoria;
+        $slug = Str::slug($titular);
 
-        $slug = Str::slug($headers[0]['text'], '-');
-
-        if(Str::length($headers[0]['text']) > 150){
+        if(Str::length($titular) > 150){
             return redirect('/admin/redactar');
         }
 
@@ -55,14 +45,12 @@ class NewsController extends Controller
             $count ++;
         }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
 
-        if(Str::length($slugBucle) > 175){
+        if(Str::length($slugBucle) > 150){
             return redirect('/admin/redactar');
         }
 
-        $imagenes = [];
-
         DB::table('noticias')->insert([
-            'titular' => strip_tags($headers[0]['text']),
+            'titular' => strip_tags($titular),
             'categoria' => $categoria->id,
             'ano' => date('Y'),
             'mes' => date('m'),
@@ -101,9 +89,52 @@ class NewsController extends Controller
             }
         }
 
-        $path = $basePath . $categoria->categoria . '/' . date('Y') . '/' . date('m') . '/' . $slugBucle;
+        $path = $basePath . '/' . Str::slug($categoria->categoria) . '/' . date('Y') . '/' . date('m') . '/' . $slugBucle;
         if (! File::exists($path)) {
             File::makeDirectory($path);
+
+            $disk = Storage::build([
+                'driver' => 'local',
+                'root' => $path,
+            ]);
+             
+            $disk->put('noticia.json', $request->input('editorData'));
         }
+    }
+
+    public function editorContent(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            if(DB::table('noticias')->where('id', $id)->exists()){
+                $noticia = DB::table('noticias')->where('id', $id)->first();
+                $url = $noticia->multimedia;
+
+                $editorData = file_get_contents($url ."/noticia.json");
+            }else{
+                return redirect('/admin/noticias');
+            }
+        }else{
+            return redirect('/admin/noticias');
+        }
+
+        return view('admin.noticias.edit', ['editorData' => $editorData, 'idNoticia' => $id]);
+    }
+
+    public function edit(Request $request){
+        $request->validate([
+            'idNoticia' => 'required',
+            'titular' => 'required',
+            'categoria' => 'required',
+            'editorData' => 'required',
+        ]);
+
+        if(DB::table('noticias')->where('id', $id)->exists()){
+            $noticia = DB::table('noticias')->where('id', $id)->first();
+
+
+        }else{
+            return redirect('/admin/noticias');
+        }
+
     }
 }
