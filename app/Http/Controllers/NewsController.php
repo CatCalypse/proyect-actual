@@ -128,13 +128,24 @@ class NewsController extends Controller
             'editorData' => 'required',
         ]);
 
+        $id = $request->input('idNoticia');
+
         if(DB::table('noticias')->where('id', $id)->exists()){
             $noticia = DB::table('noticias')->where('id', $id)->first();
 
+            $path = $noticia->multimedia;
 
+            $disk = Storage::build([
+                'driver' => 'local',
+                'root' => $path,
+            ]);
+
+            $disk->delete('/noticia.json');
+            $disk->put('noticia.json', $request->input('editorData'));
         }else{
             return redirect('/admin/noticias');
         }
 
+        
     }
 }
