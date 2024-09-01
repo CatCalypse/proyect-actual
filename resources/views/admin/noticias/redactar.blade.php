@@ -10,6 +10,12 @@
     @csrf
 
     <div>
+        <label for="titular">Titular</label>
+        <input type="text" name="titular" id="titular">
+    </div>
+
+
+    <div>
         <label for="categoria">Categoria</label>
 
         <select name="categoria" id="categoria">
@@ -20,11 +26,7 @@
             @endforeach
         </select>
     </div>
-
-    <div>
-        <label for="titular">Titular</label>
-        <input type="text" name="titular" id="titular">
-    </div>
+    
 
     <input type="hidden" name="editorData" id="editorData">
 

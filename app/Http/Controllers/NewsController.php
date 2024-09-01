@@ -26,15 +26,13 @@ class NewsController extends Controller
         $titular = $request->input('titular');
         $categoria = DB::table('categorias')->where('id', $request->input('categoria'))->first();
 
-
         $basePath = resource_path() . '/noticias';
         $path = $basePath . '/' . Str::slug($categoria->categoria);
-
-        $slug = Str::slug($titular);
 
         if(Str::length($titular) > 150){
             return redirect('/admin/redactar');
         }
+        $slug = Str::slug($titular);
 
         $count = 0;
 
@@ -45,7 +43,7 @@ class NewsController extends Controller
             $count ++;
         }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
 
-        if(Str::length($slugBucle) > 150){
+        if(Str::length($slugBucle) > 155){
             return redirect('/admin/redactar');
         }
 
@@ -100,7 +98,10 @@ class NewsController extends Controller
              
             $disk->put('noticia.json', $request->input('editorData'));
         }
+
+        return redirect('/admin/redactar');
     }
+
 
     public function editorContent(){
         if(isset($_GET['id'])){
@@ -129,23 +130,138 @@ class NewsController extends Controller
         ]);
 
         $id = $request->input('idNoticia');
+        
 
         if(DB::table('noticias')->where('id', $id)->exists()){
             $noticia = DB::table('noticias')->where('id', $id)->first();
 
-            $path = $noticia->multimedia;
+            $categoria = $request->input('categoria');
+            $titular = $request->input('titular');
+            $slug = $noticia->slug;
+            
 
-            $disk = Storage::build([
-                'driver' => 'local',
-                'root' => $path,
-            ]);
+            if($categoria != $noticia->categoria || $titular != $noticia->titular){
+                $basePath = resource_path() . '/noticias';
+                $catBorrar = DB::table('categorias')->where('id', $noticia->categoria)->first();
+                File::deleteDirectory($basePath . '/' . Str::slug($catBorrar->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $noticia->slug);
 
-            $disk->delete('/noticia.json');
-            $disk->put('noticia.json', $request->input('editorData'));
+
+                if(DB::table('categorias')->where('id', $categoria)->exists()){
+                    $textCategoria = DB::table('categorias')->where('id', $categoria)->first();
+                }else{
+                    return redirect('/admin/noticias');
+                }
+
+                if($categoria != $noticia->categoria){
+                    $path = $basePath . '/' . Str::slug($textCategoria->categoria);
+
+                    if (! File::exists($path)) {
+                        File::makeDirectory($path);
+            
+                        $path = $path . '/' . $noticia->ano;
+            
+                        if (! File::exists($path)) {
+                            File::makeDirectory($path);
+            
+                            $path = $path . '/' . $noticia->mes;
+                            
+                            if (! File::exists($path)) {
+                                File::makeDirectory($path);
+            
+                            }
+                        }
+                    }else{
+                        $path = $path . '/' . $noticia->ano;
+                        
+                        if (! File::exists($path)) {
+                            File::makeDirectory($path);
+            
+                            $path = $path . '/' . $noticia->mes;
+                            
+                            if (! File::exists($path)) {
+                                File::makeDirectory($path);
+            
+                            }
+                        }
+                    }
+            
+                }else{
+                    $textCategoria = DB::table('categorias')->where('id', $categoria)->first();
+                }
+
+                if($titular != $noticia->titular){
+                    if(Str::length($titular) > 150){
+                        return redirect("/admin/edit?id=$id");
+                    }
+                    $slug = Str::slug($titular);
+
+                    $count = 0;
+            
+                    $slugBucle = $slug;
+                    do{
+                        $slugBucle = $slug . $count;
+                        $count ++;
+                    }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
+                    
+                    if(Str::length($slugBucle) > 155){
+                        return redirect("/admin/edit?id=$id");
+                    }
+
+                    $slug = $slugBucle;
+
+
+                   
+                }
+
+                $multimedia = $basePath . '/' . Str::slug($textCategoria->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $slug;
+
+                
+                $affected = DB::table('noticias')
+                ->where('id', $id)
+                ->update(['titular' => $titular,
+                'categoria' => $categoria,
+                'slug' => $slug,
+                'multimedia' => $multimedia]);
+
+                if (! File::exists($multimedia)) {
+                    File::makeDirectory($multimedia);
+        
+                    $disk = Storage::build([
+                        'driver' => 'local',
+                        'root' => $multimedia,
+                    ]);
+                     
+                    $disk->put('noticia.json', $request->input('editorData'));
+                }else{
+                    $disk = Storage::build([
+                        'driver' => 'local',
+                        'root' => $multimedia,
+                    ]);
+                     
+                    $disk->put('noticia.json', $request->input('editorData'));
+                }
+
+            }else{
+                $path = $noticia->multimedia;
+
+                $disk = Storage::build([
+                    'driver' => 'local',
+                    'root' => $path,
+                ]);
+
+                if($disk->has('/noticia.json')){
+                    $disk->delete('/noticia.json');
+                    $disk->put('noticia.json', $request->input('editorData'));
+                }else{
+                    return redirect('/admin/noticias');
+                }
+
+            }
+
+            return redirect('/admin/noticias');
+
         }else{
             return redirect('/admin/noticias');
         }
-
-        
     }
 }

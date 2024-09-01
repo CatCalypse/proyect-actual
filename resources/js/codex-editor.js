@@ -102,8 +102,7 @@ document.querySelector('#redact-form').addEventListener('submit', function (e) {
 
   editor.save().then((outputData) => {
       document.querySelector('#editorData').value = JSON.stringify(outputData);
-      // this.submit();
-      console.log(document.querySelector('#editorData').value)
+      this.submit();
   }).catch((error) => {
       console.error('Saving failed: ', error);
   });

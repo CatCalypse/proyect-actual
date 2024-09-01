@@ -39,10 +39,10 @@ return new class extends Migration
             $table->id();
             $table->string('titular', length: 150);
             $table->unsignedBigInteger('categoria');
-            $table->unsignedMediumInteger('ano');
-            $table->unsignedMediumInteger('mes');
+            $table->string('ano', length: 4);
+            $table->string('mes', length: 2);
             $table->unsignedBigInteger('escritor');
-            $table->string('slug', length: 150)->unique();
+            $table->string('slug', length: 155)->unique();
             $table->string('multimedia', length: 200)->unique();
             $table->foreign('categoria')->references('id')->on('categorias');
             $table->foreign('escritor')->references('id')->on('usuarios');

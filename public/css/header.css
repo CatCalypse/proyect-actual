@@ -1,6 +1,8 @@
 body{
     min-height:fit-content;
     margin: 0px;
+    font-size:large ;
+    background-color: rgb(250, 250, 250);
 }
 
 header{
@@ -8,18 +10,80 @@ header{
     top:0px;
     margin:0px;
 
+    z-index: 10;
     height:fit-content;
 }
 
+a{
+    text-decoration: none;
+}
+
 #control-header{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+
     height:35px;
     background-color: #0e1111;
     width:100vw;
 }
 
-#control-header > a{
-    text-decoration: none;
+#control-options{
+    display:flex;
+    justify-content: space-between;
+}
+
+#control-options > a{
     color:whitesmoke;
+    padding-right: 25px;
+}
+
+#control-links{
+    display:flex;
+    flex-direction: row;
+    gap:25px;
+
+    padding-left: 25px;
+}
+
+#control-links > a{
+    color:whitesmoke;
+}
+
+#header-content{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+#brand{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-size: larger;
+    border-bottom: 1px solid #0e1111;
+}
+
+#header-links{
+    display:flex;
+    justify-content: center;
+
+    gap: 25px;
+    border-bottom: 1px solid #0e1111;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+#header-links > a{
+    color:#0e1111;
+
+    transition: 0.25s;
+}
+
+#header-links > a:hover{
+    /* Color a cambiar */
+    color:blue; 
 }
 
 #editorjs{

@@ -6,8 +6,16 @@
 
 @vite(['resources/js/codex-editor.js'])
 
+@php($datosNoticia = getNewsData($idNoticia)) 
+
 <form id="redact-form" method="post" action="/edit-noticias">
     @csrf
+
+    <div>
+        <label for="titular">Titular</label>
+        <input type="text" name="titular" id="titular" value="{{ $datosNoticia->titular }}">
+    </div>
+
 
     <div>
         <label for="categoria">Categoria</label>
@@ -16,14 +24,14 @@
             <option value="">--- Seleccionar Categoría ---</option>
 
             @foreach(getCategorias() as $categoria)
-                <option value="{{$categoria->id}}">{{ $categoria->categoria}}</option>
+                @if($datosNoticia->categoria == $categoria->id)
+                    <option value="{{$categoria->id}}" selected>{{ $categoria->categoria }}</option>
+                @else
+                    <option value="{{$categoria->id}}">{{ $categoria->categoria}}</option>
+                @endif
+                
             @endforeach
         </select>
-    </div>
-
-    <div>
-        <label for="titular">Titular</label>
-        <input type="text" name="titular" id="titular">
     </div>
 
     <input type="hidden" name="idNoticia" id="idNoticia" value="{{$idNoticia}}">

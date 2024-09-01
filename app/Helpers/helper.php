@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
     function getRol(){
         $rol = Auth::user()->rol;
@@ -35,9 +36,15 @@ use Illuminate\Support\Facades\DB;
     }
 
     function getCategorias(){
-        $categorias = DB::table('categorias')->get();
+        $categorias = DB::table('categorias')->orderBy('id', 'asc')->get();
 
         return $categorias;
+    }
+
+    function getSlug($text){
+        $text = Str::slug($text);
+
+        return $text;
     }
 
     function paginateNoticias(){
@@ -49,9 +56,10 @@ use Illuminate\Support\Facades\DB;
 
     }
 
-    function getNewsData($slug){
-        $decodedData = json_decode($data);
-
+    function getNewsData($id){
+        $newsData = DB::table('noticias')->where('id', $id)->first();
+        return $newsData;
     }
 
+    
 

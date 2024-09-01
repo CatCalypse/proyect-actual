@@ -17,31 +17,44 @@
 <body>
     <header>
         <div>
-            @if(Auth::check())
-                @if(getRol() != 3)
-                    <div id="control-header">
-                        <a href="/admin/redactar">Redactar Noticias</a>
-                        @if(getRol() == 1)
-                            <a href="/admin/usuarios">Usuarios</a>
-                            <a href="/admin/noticias">Noticias</a>
-                        @endif
-                    </div>
-                @endif
-                
-                <div id="header-content">
-                    <a href="/logout">LogOut</a>
+            <div id="control-header">
+                <div id="control-options">
+                    @if(Auth::check())
+                        <div id="control-links">
+                            @if(getRol() != 3)
+                                <a href="/admin/redactar">Redactar</a>
+                                @if(getRol() == 1)
+                                    <a href="/admin/usuarios">Usuarios</a>
+                                    <a href="/admin/noticias">Noticias</a>
+                                @endif
+                            @endif
+                        </div>
+
+                        <a href="/logout">Cerrar Sesión</a>
+                    @else
+                        <div id="control-links"></div>
+
+                        <a href="/login">Iniciar Sesión</a>
+                    @endif
                 </div>
+            </div>
+           
 
-            @endif
 
-            @if(!Auth::check())
-                <button id="boton">Iniciar Sesión</button>
+            <div id="header-content">
+                <div id="brand">
+                    <h1>NH Diario</h1>
+                </div>
+                <div id="header-links">
+                    <a href="/">Portada</a>
+                    
+                    @php ($categoriasSlug = getCategorias())
 
-                <script>
-                    boton = document.querySelector("#boton")
-                    boton.addEventListener("click", function(){window.location.href = "/login"})
-                </script>
-            @endif
+                    @foreach($categoriasSlug as $cat)
+                        <a href="/{{getSlug($cat->categoria)}}">{{$cat->categoria}}</a>
+                    @endforeach
+                </div>
+            </div>
         </div>
 
     </header>    
