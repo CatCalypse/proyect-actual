@@ -7,13 +7,25 @@
 @vite(['resources/js/codex-editor.js'])
 
 
-@if($errors->any())
-<div id="status">
-    @foreach ($errors->all() as $error) 
-        <p>{{ $error }}</p>
-    @endforeach
+
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
+            @endforeach
+
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
+
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
 </div>
-@endif
+
 
 <div id="form-wrapper">
 <form id="redact-form" method="post" action="/redactar" enctype="multipart/form-data">
@@ -59,7 +71,7 @@
             <p id="nombre-archivo"></p>
         </div>
             
-        <input type="file" name="destacado" id="destacado" value="{{old('destacado')}}">
+        <input type="file" name="destacado" id="destacado">
     </div>
 
 

@@ -29,7 +29,7 @@ class NewsController extends Controller
         foreach ($json as $json_data){
             if(is_array($json_data)){
                 if(empty($json_data)){
-                    return redirect ('/admin/redactar')->withErrors(['error'=> 'El contenido no puede estar vacio'], 'status')->withInput();
+                    return redirect('/admin/redactar')->withErrors(['editorData' => 'El contenido no puede estar vacio'])->withInput();
                 }
             }
         }
@@ -43,7 +43,7 @@ class NewsController extends Controller
         $path = $basePath . '/' . Str::slug($categoria->categoria);
 
         if(Str::length($titular) > 150){
-            return redirect('/admin/redactar');
+            return redirect('/admin/redactar')->withErrors(['titular' => 'El titular es demasiado largo'])->withInput();
         }
         
         $slug = Str::slug($titular);
@@ -58,7 +58,7 @@ class NewsController extends Controller
         }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
 
         if(Str::length($slugBucle) > 155){
-            return redirect('/admin/redactar');
+            return redirect('/admin/redactar')->withErrors(['editorData' => 'El titular es demasiado largo'])->withInput();
         }
 
         $imageName = $slugBucle . '.' . $request->destacado->extension();
@@ -132,10 +132,10 @@ class NewsController extends Controller
 
             $request->destacado->move(($path), $imageName);
         }else{
-            return redirect('/admin/redactar');
+            return redirect('/admin/redactar')->withErrors(['newsError' => 'Error al publicar la noticia'])->withInput();;
         }
 
-        return redirect('/admin/redactar');
+        return redirect('/admin/redactar')->with('message', 'Se ha publicado la noticia correctamente');;
     }
 
 
@@ -184,7 +184,7 @@ class NewsController extends Controller
         foreach ($json as $json_data){
             if(is_array($json_data)){
                 if(empty($json_data)){
-                    return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'El contenido no puede estar vacio'], 'status')->withInput();
+                    return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'El contenido no puede estar vacio'])->withInput();
                 }
             }
         }
@@ -206,7 +206,7 @@ class NewsController extends Controller
                 if(DB::table('categorias')->where('id', $categoria)->exists()){
                     $textCategoria = DB::table('categorias')->where('id', $categoria)->first();
                 }else{
-                    return redirect('/admin/noticias');
+                    return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'Error al actualizar los datos'])->withInput();
                 }
 
                 if($categoria != $noticia->categoria){
@@ -248,7 +248,7 @@ class NewsController extends Controller
 
                 if($titular != $noticia->titular){
                     if(Str::length($titular) > 150){
-                        return redirect("/admin/noticias/editar?id=$id");
+                        return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'El titular es demasiado largo'])->withInput();
                     }
                     $slug = Str::slug($titular);
 
@@ -261,7 +261,7 @@ class NewsController extends Controller
                     }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
                     
                     if(Str::length($slugBucle) > 155){
-                        return redirect("/admin/noticias/editar?id=$id");
+                        return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'El titular es demasiado largo'])->withInput();
                     }
 
                     $slug = $slugBucle;
@@ -297,7 +297,8 @@ class NewsController extends Controller
                      
                     $disk->put('noticia.json', $request->input('editorData'));
                 }
-
+                
+                return redirect("/admin/noticias/editar?id=$id")->with(['message'=> 'La noticia ha sido editada correctamente'])->withInput();
             }else{
                 $path = $noticia->multimedia;
 
@@ -310,15 +311,16 @@ class NewsController extends Controller
                     $disk->delete('/noticia.json');
                     $disk->put('noticia.json', $request->input('editorData'));
                 }else{
-                    return redirect('/admin/noticias');
+                    $disk->put('noticia.json', $request->input('editorData'));
                 }
 
+                return redirect("/admin/noticias/editar?id=$id")->with(['message'=> 'La noticia ha sido editada correctamente'])->withInput();
             }
 
-            return redirect('/admin/noticias');
+            return redirect("/admin/noticias/editar?id=$id");
 
         }else{
-            return redirect('/admin/noticias');
+            return redirect("/admin/noticias")->withErrors(['error'=> 'Se ha producido un error al editar la noticia'])->withInput();
         }
     }
 }

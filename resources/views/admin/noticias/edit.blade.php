@@ -9,13 +9,24 @@
 @php($datosNoticia = getNewsData($idNoticia)) 
 
 
-@if($errors->any())
-<div id="status">
-    @foreach ($errors->all() as $error) 
-        <p>{{ $error }}</p>
-    @endforeach
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
+            @endforeach
+
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
+
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
 </div>
-@endif
+
 
 <div id="form-wrapper">
 <form id="redact-form" method="post" action="/edit-noticias" enctype="multipart/form-data">
@@ -51,6 +62,8 @@
 
     <div class="input-wrapper">
         <label for="destacado">Imagen Destacada <span class="requerido">*</span></label>
+
+        <img src="{{(resource_path() . '/noticias/internacional/2024/09/como-mola-o-fecoga0/como-mola-o-fecoga0.jpg')}}" alt="">
 
         <div id="file-upload">
             <md-elevated-button type="button" id="boton-archivo">Seleccionar Imagen</md-elevated-button>

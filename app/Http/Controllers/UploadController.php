@@ -14,7 +14,7 @@ class UploadController extends Controller
         ]);
 
         // Store the image
-        $path = $request->file('image')->store('images', 'public');
+        $path = $request->file('image')->store('images/contenido', 'public');
 
         // Return the path as a response
         return response()->json([

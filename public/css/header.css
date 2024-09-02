@@ -10,6 +10,11 @@ a{
 }
 
 /* Comun */
+.flex-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 .requerido{
     color:rgb(216, 0, 0);
@@ -181,6 +186,40 @@ label{
 }
 
 /* Mensajes de estado */
+
+#alert-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.alert {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+    width:fit-content;
+    margin-top: 25px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.alert.succes{
+    background-color: #04AA6D;
+}
+
+.alert.error{
+    background-color: #f44336;
+}
+
+
+.error-message{
+    max-width: 775px;
+    width:fit-content;
+    margin:0px;
+}
 
 /* Editor de texto */
 #editorjs{
