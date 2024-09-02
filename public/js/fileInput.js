@@ -12,5 +12,5 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.files[0]) {
             archivo.textContent = 'Archivo seleccionado: ' + e.target.files[0].name;
         }
-      });
+    });
 });

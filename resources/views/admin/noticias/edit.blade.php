@@ -8,50 +8,6 @@
 
 @php($datosNoticia = getNewsData($idNoticia)) 
 
-<!-- <form id="redact-form" method="post" action="/edit-noticias">
-    @csrf
-
-    <div>
-        <label for="titular">Titular</label>
-        <input type="text" name="titular" id="titular" value="{{ $datosNoticia->titular }}">
-    </div>
-
-
-    <div>
-        <label for="categoria">Categoria</label>
-
-        <select name="categoria" id="categoria">
-            <option value="">--- Seleccionar Categoría ---</option>
-
-            @foreach(getCategorias() as $categoria)
-                @if($datosNoticia->categoria == $categoria->id)
-                    <option value="{{$categoria->id}}" selected>{{ $categoria->categoria }}</option>
-                @else
-                    <option value="{{$categoria->id}}">{{ $categoria->categoria}}</option>
-                @endif
-                
-            @endforeach
-        </select>
-    </div>
-
-    <input type="hidden" name="idNoticia" id="idNoticia" value="{{$idNoticia}}">
-
-    <input type="hidden" name="editorData" id="editorData" value="{{$editorData}}">
-
-    <div id="editorjs"></div>
-        
-    <div>
-        <input type="submit" value="save">
-    </div>
-
-
-</form> -->
-
-
-
-
-
-<!-- O form de redactar -->
 
 @if($errors->any())
 <div id="status">
@@ -62,7 +18,7 @@
 @endif
 
 <div id="form-wrapper">
-<form id="redact-form" method="post" action="/redactar" enctype="multipart/form-data">
+<form id="redact-form" method="post" action="/edit-noticias" enctype="multipart/form-data">
     @csrf
 
     <div class="input-wrapper">
@@ -94,14 +50,14 @@
 
 
     <div class="input-wrapper">
-        <label for="fondo">Imagen de Fondo <span class="requerido">*</span></label>
+        <label for="destacado">Imagen Destacada <span class="requerido">*</span></label>
 
         <div id="file-upload">
-            <md-elevated-button type="button" id="boton-archivo">Subir Imagen</md-elevated-button>
+            <md-elevated-button type="button" id="boton-archivo">Seleccionar Imagen</md-elevated-button>
             <p id="nombre-archivo"></p>
         </div>
             
-        <input type="file" name="fondo" id="fondo">
+        <input type="file" name="destacado" id="destacado">
     </div>
 
 

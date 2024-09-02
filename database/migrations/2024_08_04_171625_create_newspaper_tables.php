@@ -38,7 +38,7 @@ return new class extends Migration
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->string('titular', length: 150);
-            $table->string('fondo');
+            $table->string('destacado');
             $table->unsignedBigInteger('categoria');
             $table->string('ano', length: 4);
             $table->string('mes', length: 2);

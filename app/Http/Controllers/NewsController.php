@@ -20,9 +20,21 @@ class NewsController extends Controller
         $request->validate([
             'titular' => 'required',
             'categoria' => 'required',
-            'fondo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'destacado' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'editorData' => 'required',
         ]);
+
+        $json = json_decode($request->editorData);    
+
+        foreach ($json as $json_data){
+            if(is_array($json_data)){
+                if(empty($json_data)){
+                    return redirect ('/admin/redactar')->withErrors(['error'=> 'El contenido no puede estar vacio'], 'status')->withInput();
+                }
+            }
+        }
+
+        
 
         $titular = $request->input('titular');
         $categoria = DB::table('categorias')->where('id', $request->input('categoria'))->first();
@@ -33,6 +45,7 @@ class NewsController extends Controller
         if(Str::length($titular) > 150){
             return redirect('/admin/redactar');
         }
+        
         $slug = Str::slug($titular);
 
         $count = 0;
@@ -48,12 +61,12 @@ class NewsController extends Controller
             return redirect('/admin/redactar');
         }
 
-        $imageName = $slugBucle . '.' . $request->fondo->extension();
+        $imageName = $slugBucle . '.' . $request->destacado->extension();
 
         DB::table('noticias')->insert([
             'titular' => strip_tags($titular),
             'categoria' => $categoria->id,
-            'fondo' => $imageName,
+            'destacado' => $imageName,
             'ano' => date('Y'),
             'mes' => date('m'),
             'escritor' => Auth::user()->id,
@@ -117,7 +130,7 @@ class NewsController extends Controller
              
             $disk->put('noticia.json', $request->input('editorData'));
 
-            $request->fondo->move(($path), $imageName);
+            $request->destacado->move(($path), $imageName);
         }else{
             return redirect('/admin/redactar');
         }
@@ -145,15 +158,36 @@ class NewsController extends Controller
     }
 
     public function edit(Request $request){
-        $request->validate([
-            'idNoticia' => 'required',
-            'titular' => 'required',
-            'categoria' => 'required',
-            'editorData' => 'required',
-        ]);
-
-        $id = $request->input('idNoticia');
         
+        if($request->has('destacado') && $request->has('destacado') != ""){
+            $request->validate([
+                'idNoticia' => 'required',
+                'titular' => 'required',
+                'categoria' => 'required',
+                'destacado' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'editorData' => 'required',
+            ]);
+        }else{
+            $request->validate([
+                'idNoticia' => 'required',
+                'titular' => 'required',
+                'categoria' => 'required',
+                'editorData' => 'required',
+            ]);
+        }
+        
+        $id = $request->input('idNoticia');
+
+
+        $json = json_decode($request->editorData);    
+
+        foreach ($json as $json_data){
+            if(is_array($json_data)){
+                if(empty($json_data)){
+                    return redirect("/admin/noticias/editar?id=$id")->withErrors(['error'=> 'El contenido no puede estar vacio'], 'status')->withInput();
+                }
+            }
+        }
 
         if(DB::table('noticias')->where('id', $id)->exists()){
             $noticia = DB::table('noticias')->where('id', $id)->first();
@@ -161,7 +195,7 @@ class NewsController extends Controller
             $categoria = $request->input('categoria');
             $titular = $request->input('titular');
             $slug = $noticia->slug;
-            
+
 
             if($categoria != $noticia->categoria || $titular != $noticia->titular){
                 $basePath = resource_path() . '/noticias';
@@ -214,7 +248,7 @@ class NewsController extends Controller
 
                 if($titular != $noticia->titular){
                     if(Str::length($titular) > 150){
-                        return redirect("/admin/edit?id=$id");
+                        return redirect("/admin/noticias/editar?id=$id");
                     }
                     $slug = Str::slug($titular);
 
@@ -227,7 +261,7 @@ class NewsController extends Controller
                     }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
                     
                     if(Str::length($slugBucle) > 155){
-                        return redirect("/admin/edit?id=$id");
+                        return redirect("/admin/noticias/editar?id=$id");
                     }
 
                     $slug = $slugBucle;
