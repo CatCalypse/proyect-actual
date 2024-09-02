@@ -15,6 +15,7 @@ let editor = new EditorJS({
     /**
      * Id of Element that should contain Editor instance
      */
+    
     holder: 'editorjs',
     tools: { 
         header: {
@@ -88,9 +89,11 @@ let editor = new EditorJS({
 document.addEventListener('DOMContentLoaded', function () {
   const editorData = document.getElementById('editorData');
   if (editorData) {
-    editor.isReady.then(() => {
-      return editor.render(JSON.parse(editorData.value));
-    });
+    if(editorData.value != ""){
+      editor.isReady.then(() => {
+        return editor.render(JSON.parse(editorData.value));
+      });
+    }
   }
 });
 

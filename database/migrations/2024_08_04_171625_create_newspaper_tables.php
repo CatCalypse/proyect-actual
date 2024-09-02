@@ -38,6 +38,7 @@ return new class extends Migration
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->string('titular', length: 150);
+            $table->string('fondo');
             $table->unsignedBigInteger('categoria');
             $table->string('ano', length: 4);
             $table->string('mes', length: 2);
@@ -46,6 +47,7 @@ return new class extends Migration
             $table->string('multimedia', length: 200)->unique();
             $table->foreign('categoria')->references('id')->on('categorias');
             $table->foreign('escritor')->references('id')->on('usuarios');
+            $table->boolean('activo');
         });
     }
 

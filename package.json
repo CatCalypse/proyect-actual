@@ -24,7 +24,9 @@
         "@editorjs/quote": "^2.7.2",
         "@editorjs/raw": "^2.5.0",
         "@editorjs/simple-image": "^1.6.0",
+        "@material/web": "^2.1.0",
         "editorjs-html": "^3.4.3",
+        "materialize-css": "^1.0.0",
         "quill": "^2.0.2"
     }
 }

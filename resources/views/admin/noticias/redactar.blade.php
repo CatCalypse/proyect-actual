@@ -1,44 +1,77 @@
 @extends("layouts.layout")
 
-@section("title", "NHdiario")
+@section("title", "NH Diario")
 
 @section ("content")
 
 @vite(['resources/js/codex-editor.js'])
 
-<form id="redact-form" method="post" action="/redactar">
+
+@if($errors->any())
+<div id="status">
+    @foreach ($errors->all() as $error) 
+        <p>{{ $error }}</p>
+    @endforeach
+</div>
+@endif
+
+<div id="form-wrapper">
+<form id="redact-form" method="post" action="/redactar" enctype="multipart/form-data">
     @csrf
 
-    <div>
-        <label for="titular">Titular</label>
-        <input type="text" name="titular" id="titular">
+    <div class="input-wrapper">
+        <label for="titular">Titular <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="" name="titular" id="titular" type="text"></md-outlined-text-field>
     </div>
 
+    
 
-    <div>
-        <label for="categoria">Categoria</label>
+    <div class="input-wrapper">
+        <label for="categoria">Categoria <span class="requerido">*</span></label>
 
-        <select name="categoria" id="categoria">
-            <option value="">--- Seleccionar Categoría ---</option>
+        <md-outlined-select name="categoria" id="categoria">
+            <md-select-option aria-label="blank" value="" selected>--- Seleccionar Categoría ---</md-select-option>
+
 
             @foreach(getCategorias() as $categoria)
-                <option value="{{$categoria->id}}">{{ $categoria->categoria}}</option>
+                <md-select-option value="{{$categoria->id}}">
+                    <div slot="headline">{{ $categoria->categoria}}</div>
+                </md-select-option>
             @endforeach
-        </select>
+        </md-outlined-select>
     </div>
-    
+
+
+
+    <div class="input-wrapper">
+        <label for="destacado">Imagen Destacada <span class="requerido">*</span></label>
+
+        <div id="file-upload">
+            <md-elevated-button type="button" id="boton-archivo">Subir Imagen</md-elevated-button>
+            <p id="nombre-archivo"></p>
+        </div>
+            
+        <input type="file" name="destacado" id="destacado">
+    </div>
+
+
 
     <input type="hidden" name="editorData" id="editorData">
 
-    <div id="editorjs"></div>
+    <div>
+        <p id="content-marker">Contenido  <span class="requerido">*</span></p>
+        <div id="editorjs"></div>
+    </div>
+
     
     <div>
-        <input type="submit" value="Publicar">
+        <md-elevated-button type="submit">Publicar</md-elevated-button>
     </div>
 </form>
+</div>
 
-
-
+<script src="{{ url('/js/fileInput.js')}}"></script>
 
 @endsection
 

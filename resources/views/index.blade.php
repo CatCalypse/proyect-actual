@@ -1,13 +1,24 @@
 @extends("layouts.layout")
 
-@section("title", "NHdiario")
+@section("title", "NH Diario")
 
 @section ("content")
-<h1>Página de Inicio </h1>
 
-<div class="noticias-inicio" id="recientes">
-    
+<h2>Actualidad</h2>
+
+<div class="noticias-four-block" id="actualidad">
+
 </div>
+@php ($categorias = getCategorias())
+
+
+@foreach($categorias as $cat)
+    <h2 class="categoria"><a href="/{{getSlug($cat->categoria)}}">{{$cat->categoria}}</a></h2>
+@endforeach
+
+
+    
+
 
 @endsection
 

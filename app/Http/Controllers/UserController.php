@@ -139,8 +139,8 @@ class UserController extends Controller
     }
 
     public function delete(Request $request){
-        if($request->has('id')){
-            $id = $request->has('id');
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
             if(DB::table('usuarios')->where('id', $id)->exists()){
                 if(!$this->isLastAdmin($id)){
                     $deleted = DB::table('usuarios')->where('id', $id)->delete();

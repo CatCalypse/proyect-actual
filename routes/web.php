@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,13 +41,6 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [UserController::class, 'register']);
-
-
-// test
-Route::get('/test', function () {
-    return view('test');
-});
-
 
 //auth
 
@@ -100,9 +93,13 @@ Route::post('/upload-image', [UploadController::class, 'upload'])->name('upload-
 // noticias - dinamico
 
 Route::get('/noticias/{categoria}/{ano}/{mes}/{slug}', function ($categoria, $ano, $mes, $slug) {
-    $noticia = file_get_contents(resource_path() . "/noticias/{$categoria}/{$ano}/{$mes}/{$slug}/noticia.json");
+    if(File::exists(resource_path() . "/noticias/{$categoria}/{$ano}/{$mes}/{$slug}/noticia.json")){
+        $noticia = file_get_contents(resource_path() . "/noticias/{$categoria}/{$ano}/{$mes}/{$slug}/noticia.json");
 
-    return view('showNoticias', [
-        'noticia' => $noticia
-    ]);
+        return view('showNoticias', [
+            'noticia' => $noticia
+        ]);
+    }else{
+        return redirect('/');
+    }
 });

@@ -20,6 +20,7 @@ class NewsController extends Controller
         $request->validate([
             'titular' => 'required',
             'categoria' => 'required',
+            'fondo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'editorData' => 'required',
         ]);
 
@@ -47,14 +48,18 @@ class NewsController extends Controller
             return redirect('/admin/redactar');
         }
 
+        $imageName = $slugBucle . '.' . $request->fondo->extension();
+
         DB::table('noticias')->insert([
             'titular' => strip_tags($titular),
             'categoria' => $categoria->id,
+            'fondo' => $imageName,
             'ano' => date('Y'),
             'mes' => date('m'),
             'escritor' => Auth::user()->id,
             'slug' => $slugBucle,
-            'multimedia' => $multimedia
+            'multimedia' => $multimedia,
+            'activo' => 1,
         ]);
 
         if (! File::exists($path)) {
@@ -71,13 +76,27 @@ class NewsController extends Controller
                     File::makeDirectory($path);
 
                 }
+            }else{
+                $path = $path . '/' . date('m');
+                
+                if (! File::exists($path)) {
+                    File::makeDirectory($path);
+
+                }
             }
         }else{
             $path = $path . '/' . date('Y');
-            
+
             if (! File::exists($path)) {
                 File::makeDirectory($path);
 
+                $path = $path . '/' . date('m');
+                
+                if (! File::exists($path)) {
+                    File::makeDirectory($path);
+
+                }
+            }else{
                 $path = $path . '/' . date('m');
                 
                 if (! File::exists($path)) {
@@ -97,6 +116,10 @@ class NewsController extends Controller
             ]);
              
             $disk->put('noticia.json', $request->input('editorData'));
+
+            $request->fondo->move(($path), $imageName);
+        }else{
+            return redirect('/admin/redactar');
         }
 
         return redirect('/admin/redactar');

@@ -5,6 +5,18 @@ body{
     background-color: rgb(250, 250, 250);
 }
 
+a{
+    text-decoration: none;
+}
+
+/* Comun */
+
+.requerido{
+    color:rgb(216, 0, 0);
+}
+
+/* Cabecera */
+
 header{
     position: sticky;
     top:0px;
@@ -14,10 +26,6 @@ header{
     height:fit-content;
 }
 
-a{
-    text-decoration: none;
-}
-
 #control-header{
     display:flex;
     flex-direction: column;
@@ -25,7 +33,7 @@ a{
 
     height:35px;
     background-color: #0e1111;
-    width:100vw;
+
 }
 
 #control-options{
@@ -54,6 +62,8 @@ a{
     display:flex;
     flex-direction:column;
     gap:5px;
+
+    background-color: rgb(250, 250, 250);
 }
 
 #brand{
@@ -62,7 +72,17 @@ a{
     justify-content: center;
 
     font-size: larger;
-    border-bottom: 1px solid #0e1111;
+    border-bottom: 1px solid gray;
+}
+
+#logo{
+    margin-top:15px;
+    margin-bottom: 10px;
+    width: 430px;
+}
+
+#brand-link{
+    color: initial;
 }
 
 #header-links{
@@ -70,7 +90,7 @@ a{
     justify-content: center;
 
     gap: 25px;
-    border-bottom: 1px solid #0e1111;
+    border-bottom: 1px solid gray;
     padding-bottom: 5px;
     font-weight: bold;
 }
@@ -86,6 +106,88 @@ a{
     color:blue; 
 }
 
+
+/* Página de Inicio */
+
+
+
+/* Formularios */
+
+label{
+    font-weight: bold;
+}
+
+
+
+/* Redacción de noticias */
+#form-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+#redact-form{
+    display:flex;
+    flex-direction: column;
+    gap: 15px;
+
+    justify-content: center;
+    
+    max-width: 775px;
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.input-wrapper{
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+#file-upload{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:10px;
+
+    height: fit-content;
+    padding-top:5px;
+}
+
+#boton-archivo{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width:fit-content;
+}
+
+#nombre-archivo{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin:0px;
+}
+
+#destacado { display: none; }
+
+#content-marker{
+    margin:0px;
+    font-weight: bold;
+}
+
+/* Mensajes de estado */
+
+/* Editor de texto */
 #editorjs{
-    background-color: lightgray;
+    border:1px solid black;
+    border-radius: 5px;
+
+
+    padding-left: 10px;
+    padding-right: 10px;
 }

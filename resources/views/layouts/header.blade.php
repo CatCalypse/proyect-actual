@@ -1,4 +1,7 @@
 @use('Illuminate\Support\Facades\Auth')
+
+@vite(['resources/js/app.js'])
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="icon" type="image/x-icon" href="{{ url('/assets/NH DIARIO favicon.png')}}">
+
     <title>@yield("title")</title>
 
 
     <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/header.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/laraberg/css/laraberg.css')}}">
 </head>
 
 <body>
@@ -43,14 +47,16 @@
 
             <div id="header-content">
                 <div id="brand">
-                    <h1>NH Diario</h1>
+                    <a href="/">
+                        <img id="logo" src="{{url('/assets/NH DIARIO logo.png')}}"/>
+                    </a>
                 </div>
                 <div id="header-links">
                     <a href="/">Portada</a>
                     
-                    @php ($categoriasSlug = getCategorias())
+                    @php ($categorias = getCategorias())
 
-                    @foreach($categoriasSlug as $cat)
+                    @foreach($categorias as $cat)
                         <a href="/{{getSlug($cat->categoria)}}">{{$cat->categoria}}</a>
                     @endforeach
                 </div>

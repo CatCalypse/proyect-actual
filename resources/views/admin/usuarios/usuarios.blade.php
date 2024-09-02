@@ -1,6 +1,6 @@
 @extends("layouts.layout")
 
-@section("title", "NHdiario")
+@section("title", "NH Diario")
 
 @section ("content")
 <a href="/admin/usuarios/create">Añadir Usuario</a>

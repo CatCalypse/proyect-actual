@@ -1,6 +1,6 @@
 @extends("layouts.layout")
 
-@section("title", "NHdiario")
+@section("title", "NH Diario")
 
 @section ("content")
 @vite(['resources/js/app.js'])
