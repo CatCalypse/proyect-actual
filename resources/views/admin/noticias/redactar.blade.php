@@ -64,14 +64,14 @@
 
 
     <div class="input-wrapper">
-        <label for="destacado">Imagen Destacada <span class="requerido">*</span></label>
+        <label for="upload">Imagen Destacada <span class="requerido">*</span></label>
 
         <div id="file-upload">
             <md-elevated-button type="button" id="boton-archivo">Seleccionar Imagen</md-elevated-button>
             <p id="nombre-archivo"></p>
         </div>
             
-        <input type="file" name="destacado" id="destacado">
+        <input type="file" name="upload" id="upload">
     </div>
 
 

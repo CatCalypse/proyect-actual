@@ -3,23 +3,26 @@
 @section("title", "NH Diario")
 
 @section ("content")
-<a href="/admin/usuarios/create">Añadir Usuario</a>
 
-@if($errors->status->any())
-<div id="status">
-    @foreach ($errors->status->all() as $error) 
-        <p>{{ $error }}</p>
-    @endforeach
-</div>
-@endif
 
-@if($errors->any())
-<div id="error">
-    @foreach ($errors->all() as $error) 
-        <p>{{ $error }}</p>
-    @endforeach
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
+            @endforeach
+
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
+
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
 </div>
-@endif
+
 
 
 <div>

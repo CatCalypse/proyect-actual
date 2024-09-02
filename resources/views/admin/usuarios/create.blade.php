@@ -3,52 +3,99 @@
 @section("title", "NH Diario")
 
 @section ("content")
-<form method="post" action="/create"/>
-    @csrf
-    <div>
-        <label for="mail">Nombre</label>
-        <input type="text" name="nombre" id="nombre" value="">
-    </div>
 
-    <div>
-        <label for="mail">Apellido</label>
-        <input type="text" name="apellido" id="apellido" value="">
-    </div>
-
-    <div>
-        <label for="user">Usuario</label>
-        <input type="text" name="user" id="user" value=""/>
-    </div>
-
-    <div>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" value="">
-    </div>
-
-    <div>
-        <label for="mail">Correo</label>
-        <input type="text" name="mail" id="mail" value="">
-    </div>
-
-    <div>
-        <label for="activo">Activo</label>
-        <input type="checkbox" name="activo" id="activo" checked>
-    </div>
-
-    <div>
-        <label for="rol">Rol</label>
-
-        <select name="rol" id="rol">
-            <option value="">--Seleccionar Rol--</option>
-            @foreach(getAllRoles() as $rol)
-                <option value="{{$rol->id}}">{{ $rol->rol}}</option>
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
             @endforeach
-        </select>
+
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
+
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
+</div>
+
+<div id="form-wrapper">
+<form method="post" action="/create" id="user-form">
+    @csrf
+
+    <div class="input-wrapper">
+        <label for="nombre">Nombre <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('nombre') }}" name="nombre" id="nombre" type="text"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="apellido">Apellido <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('apellido') }}" name="apellido" id="apellido" type="text"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="user">Usuario <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('user') }}" name="user" id="user" type="text"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="password">Contraseña <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('password') }}" name="password" id="password" type="password"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="mail">Correo <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('mail') }}" name="mail" id="mail" type="mail"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <div id="activo-wrapper">
+            <label for="activo" id="label-activo">Activo <span class="requerido">*</span></label>
+
+            <md-checkbox touch-target="wrapper" name="activo" id="activo" checked></md-checkbox>
+        </div>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="rol">Rol <span class="requerido">*</span></label>
+
+        <md-outlined-select name="rol" id="rol">
+            @if(!old('rol'))
+                <md-select-option aria-label="blank" value="" selected>--- Seleccionar Categoría ---</md-select-option>
+            @endif
+
+            @foreach(getAllRoles() as $rol)
+                @if($rol->id == old('rol'))
+                    <md-select-option value="{{$rol->id}}" selected>
+                        <div slot="headline">{{ $rol->rol}}</div>
+                    </md-select-option>
+                @else
+                    <md-select-option value="{{$rol->id}}">
+                        <div slot="headline">{{ $rol->rol}}</div>
+                    </md-select-option>
+                @endif
+            @endforeach
+        </md-outlined-select>
     </div>
 
     <div>
-        <input type="submit" value="Crear">
+        <md-elevated-button type="submit">Publicar</md-elevated-button>
     </div>
 
 </form>
+</div>
 @endsection

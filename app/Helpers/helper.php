@@ -61,5 +61,11 @@ use Illuminate\Support\Str;
         return $newsData;
     }
 
+    function getImageFromStorage($destacado){
+        $path = "/storage/images/destacado/" . $destacado;
+
+        return $path;
+    }
+
     
 

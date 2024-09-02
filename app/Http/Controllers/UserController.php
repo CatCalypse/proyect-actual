@@ -58,7 +58,7 @@ class UserController extends Controller
 
 
     public function create(Request $request) {
-        $validator = Validator::make($request->all(),[
+        $request->validate([
             'nombre' => 'required',
             'apellido' => 'required',
             'user' => ['required', 'unique:usuarios,usuario'],
@@ -67,7 +67,7 @@ class UserController extends Controller
             'rol' => 'required'
         ],
         ['user.unique' => 'El usuario introducido no está disponible',
-        'mail.unique' => 'Ya existe una cuenta enlazada a este correo'])->validateWithBag('create');
+        'mail.unique' => 'Ya existe una cuenta enlazada a este correo']);
 
         if($request ->has('activo')){
             $activo = 1;
@@ -85,7 +85,7 @@ class UserController extends Controller
             'activo' =>  $activo,
         ]);
 
-        return redirect ('/admin/usuarios')->withErrors(['message'=> 'Usuario creado correctamente'], 'status');
+        return redirect ('/admin/usuarios/create')->with(['message'=> 'Usuario creado correctamente']);
     }
 
 
@@ -97,9 +97,7 @@ class UserController extends Controller
             'mail' => ['required'],
             'rol' => 'required',
             'id' => 'required'
-        ],
-        ['user.unique' => 'El usuario introducido no está disponible',
-        'mail.unique' => 'Ya existe una cuenta enlazada a este correo'])->validateWithBag('edit');
+        ])->validateWithBag('errors');
 
         if($request->has('activo')){
             $activo = 1;
@@ -107,11 +105,12 @@ class UserController extends Controller
             $activo = 0;
         }
 
+        $id = $request->input('id');
 
-        if(!$this->isLastAdmin($request->input('id'))){
+        if(!$this->isLastAdmin($id)){
             if($request->has('password')){
                 $affected = DB::table('usuarios')
-                ->where('id', $request->input('id'))
+                ->where('id', $id)
                 ->update(['nombre' => $request->input('nombre'),
                 'apellidos' => $request->input('apellido'),
                 'usuario' => $request->input('user'),
@@ -122,7 +121,7 @@ class UserController extends Controller
     
             }else{
                 $affected = DB::table('usuarios')
-                ->where('id', $request->input('id'))
+                ->where('id', $id)
                 ->update(['nombre' => $request->input('nombre'),
                 'apellidos' => $request->input('apellido'),
                 'usuario' => $request->input('user'),
@@ -131,11 +130,9 @@ class UserController extends Controller
                 'activo' => $activo]);
             }
         }else{
-            return redirect ('/admin/usuarios')->withErrors(['message'=> 'No se puede editar al útlimo administrador activo'], 'status');
+            return redirect ("/admin/usuarios/edit?id=$id")->withErrors(['error'=> 'No se puede editar al útlimo administrador activo']);
         }
-
-
-        return redirect ('/admin/usuarios')->withErrors(['message'=> 'Usuario editado correctamente'], 'status');
+        return redirect ("/admin/usuarios/edit?id=$id")->with(['message'=> 'Usuario editado correctamente']);
     }
 
     public function delete(Request $request){
@@ -144,17 +141,17 @@ class UserController extends Controller
             if(DB::table('usuarios')->where('id', $id)->exists()){
                 if(!$this->isLastAdmin($id)){
                     $deleted = DB::table('usuarios')->where('id', $id)->delete();
-                    return redirect ('/admin/usuarios')->withErrors(['message'=> 'Usuario editado correctamente'], 'status');
+                    return redirect ('/admin/usuarios')->with(['message'=> 'Usuario editado correctamente']);
                 }else{
-                    return redirect ('/admin/usuarios')->withErrors(['message'=> 'No se puede eliminar al útlimo administrador activo'], 'status');
+                    return redirect ('/admin/usuarios')->withErrors(['error'=> 'No se puede eliminar al útlimo administrador activo']);
                 }
 
             }else{
-                return redirect ('/admin/usuarios')->withErrors(['message'=> 'Error al eliminar al usuario'], 'status');
+                return redirect ('/admin/usuarios')->withErrors(['error'=> 'Error al eliminar al usuario']);
             }
 
         }else{
-            return redirect ('/admin/usuarios')->withErrors(['message'=> 'Error al eliminar al usuario'], 'status');
+            return redirect ('/admin/usuarios')->withErrors(['error'=> 'Error al eliminar al usuario']);
         }
     }
 

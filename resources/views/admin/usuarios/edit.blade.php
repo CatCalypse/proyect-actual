@@ -6,89 +6,112 @@
 
 @if( is_null(getUserData()))
 <script>
-     window.location.href = "/admin/usuarios"
+    window.location.href = "/admin/usuarios"
 </script>
 @else
-    @php($datos = getUserData())
-
-    @if ($errors->edit->any())
-    <div>
-        <ul>
-            @foreach ($errors->edit->all() as $error)
-                <li>{{ $error }}</li>
-
-            @endforeach
 
 
-        </ul>
-    </div>
+    <div id="alert-wrapper">
+        @if($errors->any())
+            <div class="alert error">
+                @foreach ($errors->all() as $error) 
+                    <p class="error-message">{{ $error }}</p>
+                @endforeach
 
-    @endif
-
-    <form method="post" action="/edit"/>
-    @csrf
-
-    <input type="hidden" name="id" id="id" value="{{ $datos->id }}">
-    
-    <div>
-        <label for="user">Usuario</label>
-        <input type="text" name="user" id="user" value="{{ $datos->usuario }}"/>
-    </div>
-
-        <div>
-        <label for="mail">Correo</label>
-        <input type="text" name="mail" id="mail" value="{{ $datos->correo }}">
-    </div>
-
-    <div>
-        <label for="mail">Nombre</label>
-        <input type="text" name="nombre" id="nombre" value="{{ $datos->nombre }}">
-    </div>
-
-    <div>
-        <label for="mail">Apellido</label>
-        <input type="text" name="apellido" id="apellido" value="{{ $datos->apellidos }}">
-    </div>
-
-    <div>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" value="">
-    </div>
-
-    
-    <div>
-        <label for="rol">Rol</label>
-
-        <select name="rol" id="rol">
-            @foreach(getAllRoles() as $rol)
-                @if($datos->rol == $rol->id)
-                    <option value="{{$rol->id}}" selected>{{ $rol->rol}}</option>
-                @else
-                    <option value="{{$rol->id}}">{{ $rol->rol}}</option>
+                @if(isset($contentError))
+                    <p class="error-message">{{ $contentError }}</p>
                 @endif
-            @endforeach
-        </select>
-    </div>
+            </div>
+        @endif
 
-
-    <div>
-        <label for="activo">Activo</label>
-        @if($datos->activo == 1)
-            <input type="checkbox" name="activo" id="activo" checked>
-        @else
-            <input type="checkbox" name="activo" id="activo">
+        @if (session('message'))
+            <div class="alert succes">{{ session('message') }}</div>
         @endif
     </div>
 
+
+    @php($datos = getUserData())
+
+
+    <div id="form-wrapper">
+    <form method="post" action="/edit" id="user-form">
+    @csrf
+
+    <input type="hidden" name="id" id="id" value="{{ $datos->id }}">
+
+    <div class="input-wrapper">
+        <label for="nombre">Nombre <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="nombre" id="nombre" type="text" value="{{ $datos->nombre }}"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="apellido">Apellido <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="apellido" id="apellido" type="text" value="{{ $datos->apellidos }}"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="user">Usuario <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="user" id="user" type="text" value="{{ $datos->usuario }}"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="password">Contraseña <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="password" id="password" type="password"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="mail">Correo <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="mail" id="mail" type="mail" value="{{ $datos->correo }}"></md-outlined-text-field>
+    </div>
+
+
+    <div class="input-wrapper">
+        <div id="activo-wrapper">
+            <label for="activo" id="label-activo">Activo <span class="requerido">*</span></label>
+
+            @if($datos->activo == 1)
+                <md-checkbox touch-target="wrapper" name="activo" id="activo" checked></md-checkbox>
+            @else
+                <md-checkbox touch-target="wrapper" name="activo" id="activo"></md-checkbox>
+            @endif
+        </div>
+    </div>
+
+
+    <div class="input-wrapper">
+        <label for="rol">Rol <span class="requerido">*</span></label>
+
+        <md-outlined-select name="rol" id="rol">
+            @foreach(getAllRoles() as $rol)
+                @if($datos->rol == $rol->id)
+                    <md-select-option value="{{$rol->id}}" selected>
+                        <div slot="headline">{{ $rol->rol}}</div>
+                    </md-select-option>
+                @else
+                    <md-select-option value="{{$rol->id}}">
+                        <div slot="headline">{{ $rol->rol}}</div>
+                    </md-select-option>
+                @endif
+            @endforeach
+        </md-outlined-select>
+    </div>
+
     <div>
-        <input type="submit" value="Editar">
+        <md-elevated-button type="submit">Publicar</md-elevated-button>
     </div>
 
 </form>
+</div>
+
 @endif
-
-
-
-
 
 @endsection

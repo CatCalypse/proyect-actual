@@ -20,7 +20,7 @@ class NewsController extends Controller
         $request->validate([
             'titular' => 'required',
             'categoria' => 'required',
-            'destacado' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'upload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'editorData' => 'required',
         ]);
 
@@ -61,7 +61,7 @@ class NewsController extends Controller
             return redirect('/admin/redactar')->withErrors(['editorData' => 'El titular es demasiado largo'])->withInput();
         }
 
-        $imageName = $slugBucle . '.' . $request->destacado->extension();
+        $imageName = $slugBucle . '.' . $request->upload->extension();
 
         DB::table('noticias')->insert([
             'titular' => strip_tags($titular),
@@ -130,7 +130,10 @@ class NewsController extends Controller
              
             $disk->put('noticia.json', $request->input('editorData'));
 
-            $request->destacado->move(($path), $imageName);
+
+            $pathDestacado = $request->file('upload')->storeAs(
+                'public/images/destacado', $imageName
+            );
         }else{
             return redirect('/admin/redactar')->withErrors(['newsError' => 'Error al publicar la noticia'])->withInput();;
         }
@@ -159,14 +162,16 @@ class NewsController extends Controller
 
     public function edit(Request $request){
         
-        if($request->has('destacado') && $request->has('destacado') != ""){
+        if($request->has('upload') && $request->has('upload') != ""){
             $request->validate([
                 'idNoticia' => 'required',
                 'titular' => 'required',
                 'categoria' => 'required',
-                'destacado' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'upload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'editorData' => 'required',
             ]);
+
+            $destacado = $request->upload;
         }else{
             $request->validate([
                 'idNoticia' => 'required',
@@ -196,6 +201,18 @@ class NewsController extends Controller
             $titular = $request->input('titular');
             $slug = $noticia->slug;
 
+
+            if(isset($destacado)){
+                $imageName = $slug . '.' . $request->upload->extension();
+
+                $pathDestacado = $request->file('upload')->storeAs(
+                    'public/images/destacado', $imageName
+                );
+
+                $affected = DB::table('noticias')
+                ->where('id', $id)
+                ->update(['destacado' => $imageName]);
+            }
 
             if($categoria != $noticia->categoria || $titular != $noticia->titular){
                 $basePath = resource_path() . '/noticias';
@@ -317,7 +334,7 @@ class NewsController extends Controller
                 return redirect("/admin/noticias/editar?id=$id")->with(['message'=> 'La noticia ha sido editada correctamente'])->withInput();
             }
 
-            return redirect("/admin/noticias/editar?id=$id");
+            return redirect("/admin/noticias/editar?id=$id")->with(['message'=> 'La noticia ha sido editada correctamente'])->withInput();
 
         }else{
             return redirect("/admin/noticias")->withErrors(['error'=> 'Se ha producido un error al editar la noticia'])->withInput();
