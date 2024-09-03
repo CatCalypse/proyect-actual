@@ -3,57 +3,78 @@
 @section("title", "NH Diario")
 
 @section ("content")
-<h1>Registrarse</h1>
 
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
 
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
             @endforeach
-        </ul>
-    </div>
 
-@endif
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
 
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
+</div>
 
-<div id="register-form">
-<form method="post" action="/register"/>
+<h1 class="center-text">Registrarse</h1>
+<div id="form-wrapper">
+<form method="post" action="/register" id="user-form">
     @csrf
-    <div>
-        <label for="mail">Nombre</label>
-        <input type="text" name="nombre" id="nombre">
+
+    <div class="input-wrapper">
+        <label for="nombre">Nombre <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('nombre') }}" name="nombre" id="nombre" type="text"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="mail">Apellido</label>
-        <input type="text" name="apellido" id="apellido">
+
+    <div class="input-wrapper">
+        <label for="apellido">Apellido <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('apellido') }}" name="apellido" id="apellido" type="text"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="user">Usuario</label>
-        <input type="text" name="user" id="user"/>
+
+    <div class="input-wrapper">
+        <label for="user">Usuario <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('user') }}" name="user" id="user" type="text"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password"/>
+
+    <div class="input-wrapper">
+        <label for="password">Contraseña <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('password') }}" name="password" id="password" type="password"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="mail">Correo</label>
-        <input type="text" name="mail" id="mail">
+
+    <div class="input-wrapper">
+        <label for="mail">Correo <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('mail') }}" name="mail" id="mail" type="mail"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="remember">Mantener sesión</label>
-        <input type="checkbox" name="remember">
+    <div class="input-wrapper">
+        <div id="activo-wrapper">
+            <label for="remember" id="label-activo">Mantener Sesión</label>
+
+            <md-checkbox touch-target="wrapper" name="remember" id="remember"></md-checkbox>
+        </div>
     </div>
 
+
     <div>
-        <input type="submit" value="Register">
+        <md-elevated-button type="submit">Registrarse</md-elevated-button>
     </div>
+
 </form>
 </div>
 @endsection

@@ -11,8 +11,6 @@ class AuthController extends Controller{
         $incomingFields = $request->validate([
             'user' => ['required', 'exists:usuarios,usuario'],
             'password' => ['required']
-        ],[
-            ['user.unique' => 'El usuario introducido no está disponible'] 
         ]);
 
         if($request ->has('remember')){
@@ -31,7 +29,7 @@ class AuthController extends Controller{
             return redirect()->intended('/');
         }
 
-        return back()->withErrors(['authError' => 'El usuario o la contraseña son incorrectos'])->withInput();
+        return back()->withErrors(['errors' => 'El usuario o la contraseña son incorrectos'])->withInput();
     }
 
     public function logout(Request $request) {

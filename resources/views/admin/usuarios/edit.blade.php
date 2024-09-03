@@ -6,7 +6,7 @@
 
 @if( is_null(getUserData()))
 <script>
-    window.location.href = "/admin/usuarios"
+    window.location.href = "/admin/usuarios";
 </script>
 @else
 
@@ -106,7 +106,7 @@
     </div>
 
     <div>
-        <md-elevated-button type="submit">Publicar</md-elevated-button>
+        <md-elevated-button type="submit">Modificar</md-elevated-button>
     </div>
 
 </form>

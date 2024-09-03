@@ -24,6 +24,11 @@
             <div id="control-header">
                 <div id="control-options">
                     @if(Auth::check())
+                        @if(!checkActive())
+                            <script>
+                                window.location.href = "/logout"
+                            </script>
+                        @endif
                         <div id="control-links">
                             @if(getRol() != 3)
                                 <a href="/admin/redactar">Redactar</a>
@@ -57,12 +62,15 @@
                     @php ($categorias = getCategorias())
 
                     @foreach($categorias as $cat)
-                        <a href="/{{getSlug($cat->categoria)}}">{{$cat->categoria}}</a>
+                        <a href="/noticias/{{getSlug($cat->categoria)}}">{{$cat->categoria}}</a>
                     @endforeach
                 </div>
             </div>
         </div>
 
     </header>    
+
+  
+
 
     <main>

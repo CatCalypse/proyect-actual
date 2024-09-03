@@ -10,6 +10,11 @@ a{
 }
 
 /* Comun */
+
+.center-text{
+    text-align: center;
+}
+
 .flex-wrapper{
     display:flex;
     flex-direction: row;
@@ -242,9 +247,30 @@ label{
     margin:0px;
 }
 
+/* Inicio de Sesion */
 
+#login-form{
+    width:500px;
+}
+
+#remember{
+    display: inline-block;
+
+    margin:0px;
+}
+
+#button-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.button-container{
+    width: fit-content;
+}
 
 /* Formulario Usuarios */
+
 #user-form{
     width:600px;
 }
@@ -303,6 +329,54 @@ label{
     font-weight: bold;
 }
 
+/* Paginado Noticias Administrador */
+
+.destacado-show-noticias{
+    width:320px;
+    margin-right: -1px;
+}
+
+#extra-noticias{
+    display:flex;
+    justify-content: center;
+
+    margin-top:25px;
+    margin-bottom: 25px;
+}
+
+.destacado-wrapper{
+    width:320px;
+    padding:0px;
+}
+
+#destacado-text{
+    width:320px;
+}
+
+/* Paginado Noticias Categoria */
+
+#categoria-text-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#categoria-text{
+    border-bottom: 2px solid darkgreen;
+    width:fit-content;
+}
+
+#paginado-categorias-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    width:1200px;
+}
+
+.noticia{
+    width:320px;
+}
 
 /* Paginado Generico */
 
@@ -320,7 +394,6 @@ label{
 
     gap: 25px;
 }
-
 
 .pagination{height:36px;margin:0;padding: 0;}
 .pager,.pagination ul{margin-left:0;}
@@ -354,6 +427,45 @@ label{
 .pagination li:first-child {
 	    border-left-width: 1px;
 }
+
+
+/* Mostrar Noticia */
+
+#titular-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#titular-text{
+    border-bottom: 1px solid darkred;
+    padding-bottom: 0px;
+    width:fit-content;
+}
+
+#imagen-noticia{
+    width:480px;
+}
+
+#noticia-wrapper{
+    flex-direction: column;
+    padding-top:25px;
+}
+
+#content-wrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#news-content{
+    display:flex;
+    flex-direction: column;
+    gap:25px;
+
+    width:500px;
+}
+
 
 /* Editor de texto */
 #editorjs{

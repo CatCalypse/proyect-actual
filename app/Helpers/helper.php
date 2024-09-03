@@ -14,6 +14,18 @@ use Illuminate\Support\Str;
         return $textRol->rol;
     }
 
+    function getCategoriaText($cat){
+        $textCategoria = DB::table('categorias')->where('id', $cat)->first();
+
+        return $textCategoria->categoria;
+    }
+
+    function getWriter($id){
+        $writer = DB::table('usuarios')->where('id', $id)->first();
+
+        return $writer->nombre;
+    }
+
     function getAllRoles(){
         $rol = DB::table('roles')->get();
 
@@ -47,9 +59,14 @@ use Illuminate\Support\Str;
         return $text;
     }
 
-    function paginateNoticias(){
-        $news = DB::table('noticias')->paginate(10);
-        return view('paginado.noticias', compact('news'));
+    function paginateNoticiasAdmin(){
+        $news = DB::table('noticias')->orderBy('id', 'desc')->paginate(10);
+        return view('paginado.noticiasAdmin', compact('news'));
+    }
+
+    function paginateNoticiasCategoria($categoria){
+        $news = DB::table('noticias')->where('categoria', $categoria)->orderBy('id', 'desc')->paginate(12);
+        return view('paginado.noticiasCategoria', compact('news'));
     }
 
     function paginateBuscador(){
@@ -65,6 +82,35 @@ use Illuminate\Support\Str;
         $path = "/storage/images/destacado/" . $destacado;
 
         return $path;
+    }
+
+    function checkActive(){
+        $id = Auth::user()->id;
+
+        if(DB::table('usuarios')->where('id', $id)->exists()){
+            $usuario = DB::table('usuarios')->where('id', $id)->first();
+            if($usuario->activo == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+
+    function getNoticiaWithSlug($slug){
+        if(DB::table('noticias')->where('slug', $slug)->exists()){
+            $noticia = DB::table('noticias')->where('slug', $slug)->first();
+
+            return($noticia);
+        }else{
+            return redirect('/');
+        }
+    }
+
+
+    function getNoticiasCategoria(){
+
     }
 
     

@@ -44,6 +44,7 @@ class UserController extends Controller
             'activo' => true,
         ]);
 
+
         if (Auth::attempt([
             'usuario' => $request->input('user'),
             'password' => $request->input('password')
@@ -53,7 +54,7 @@ class UserController extends Controller
             return redirect()->intended('/');
         }
 
-        return redirect('/');
+        return redirect('/register')->withError(['errors' => 'Se ha producido un error en el registro']);
     }
 
 
@@ -99,7 +100,7 @@ class UserController extends Controller
             'id' => 'required'
         ])->validateWithBag('errors');
 
-        if($request->has('activo')){
+        if($request->has('activo') && $request->activo){
             $activo = 1;
         }else{
             $activo = 0;
@@ -108,12 +109,13 @@ class UserController extends Controller
         $id = $request->input('id');
 
         if(!$this->isLastAdmin($id)){
-            if($request->has('password')){
+            if($request->has('password') && ($request->input('password') != "")){
                 $affected = DB::table('usuarios')
                 ->where('id', $id)
                 ->update(['nombre' => $request->input('nombre'),
                 'apellidos' => $request->input('apellido'),
                 'usuario' => $request->input('user'),
+                // 'password' => $request->input('password'),
                 'password' => Hash::make($request->input('password')),
                 'rol' => $request->input('rol'),
                 'correo' => $request->input('mail'),
@@ -140,8 +142,13 @@ class UserController extends Controller
             $id = $_GET['id'];
             if(DB::table('usuarios')->where('id', $id)->exists()){
                 if(!$this->isLastAdmin($id)){
-                    $deleted = DB::table('usuarios')->where('id', $id)->delete();
-                    return redirect ('/admin/usuarios')->with(['message'=> 'Usuario editado correctamente']);
+                    if(!DB::table('noticias')->where('escritor', $id)->exists()){
+                        $deleted = DB::table('usuarios')->where('id', $id)->delete();
+                        return redirect ('/admin/usuarios')->with(['message'=> 'Usuario editado correctamente']);
+                    }else{
+                        return redirect ('/admin/usuarios')->withErrors(['error'=> 'No se puede eliminar al usuario ya que es autor de una noticia']);
+                    }
+
                 }else{
                     return redirect ('/admin/usuarios')->withErrors(['error'=> 'No se puede eliminar al útlimo administrador activo']);
                 }

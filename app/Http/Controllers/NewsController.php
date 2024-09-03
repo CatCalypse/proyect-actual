@@ -340,4 +340,12 @@ class NewsController extends Controller
             return redirect("/admin/noticias")->withErrors(['error'=> 'Se ha producido un error al editar la noticia'])->withInput();
         }
     }
+
+    public function delete(){
+        if(isset($_GET['id'])){
+            if(DB::table('noticias')->where('id', $id)->exists()){
+                File::deleteDirectory($basePath . '/' . Str::slug($catBorrar->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $noticia->slug);
+            }
+        }
+    }
 }

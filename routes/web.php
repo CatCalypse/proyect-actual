@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 // Controladores
 
@@ -97,9 +100,26 @@ Route::get('/noticias/{categoria}/{ano}/{mes}/{slug}', function ($categoria, $an
         $noticia = file_get_contents(resource_path() . "/noticias/{$categoria}/{$ano}/{$mes}/{$slug}/noticia.json");
 
         return view('showNoticias', [
-            'noticia' => $noticia
+            'noticia' => $noticia,
+            'slug' => $slug
         ]);
     }else{
         return redirect('/');
     }
+});
+
+// categorias - dinámico
+
+Route::get('/noticias/{categoria}', function ($categoria) {
+    $categorias = DB::table('categorias')->get();
+
+    foreach($categorias as $cat){
+        if(Str::slug($cat->categoria) == $categoria){
+            return view('showCategorias', [
+                'categoria' => $cat->id
+            ]);
+        }
+    }
+
+    return redirect('/');
 });

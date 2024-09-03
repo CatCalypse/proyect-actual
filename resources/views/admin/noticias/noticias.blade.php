@@ -5,7 +5,7 @@
 @section ("content")
 
 <div>
-    {{ paginateNoticias() }}
+    {{ paginateNoticiasAdmin() }}
 </div>
 
 @endsection

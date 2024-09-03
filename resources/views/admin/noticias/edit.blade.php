@@ -88,7 +88,7 @@
 
     
     <div>
-        <md-elevated-button type="submit">Publicar</md-elevated-button>
+        <md-elevated-button type="submit">Modificar</md-elevated-button>
     </div>
 </form>
 </div>

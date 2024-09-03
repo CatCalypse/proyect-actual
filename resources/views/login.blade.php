@@ -4,58 +4,80 @@
 
 @section ("content")
 
-<h1>Iniciar Sesión</h1>
 
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
 
+<div id="alert-wrapper">
+    @if($errors->any())
+        <div class="alert error">
+            @foreach ($errors->all() as $error) 
+                <p class="error-message">{{ $error }}</p>
             @endforeach
 
+            @if(isset($contentError))
+                <p class="error-message">{{ $contentError }}</p>
+            @endif
+        </div>
+    @endif
 
-        </ul>
-    </div>
+    @if (session('message'))
+        <div class="alert succes">{{ session('message') }}</div>
+    @endif
+</div>
 
-@endif
 
-@if( Session('AuthError'))
-    <p>{{ session('AuthError') }}</p>
-@endif
+<h1 class="center-text">Iniciar Sesión</h1>
 
-<div id="login-form">
-<form method="post" action="/login"/>
+
+<div id="form-wrapper">
+<form method="post" action="/login" id="login-form">
     @csrf
-    <div>
-        <label for="user">Usuario</label>
-        <input type="text" name="user" id="user"/>
+
+
+    <div class="input-wrapper">
+        <label for="user">Usuario <span class="requerido">*</span></label>
+
+        <md-outlined-text-field value="{{ old('user') }}" name="user" id="user" type="text"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password"/>
+
+    <div class="input-wrapper">
+        <label for="password">Contraseña <span class="requerido">*</span></label>
+
+        <md-outlined-text-field name="password" id="password" type="password"></md-outlined-text-field>
     </div>
 
-    <div>
-        <label for="remember">Mantener sesión</label>
-        <input type="checkbox" name="remember" id="remember"/>
+    <div class="input-wrapper">
+        <div id="activo-wrapper">
+            <label for="remember" id="label-activo">Mantener Sesión</label>
+
+            <md-checkbox touch-target="wrapper" name="remember" id="remember"></md-checkbox>
+        </div>
     </div>
 
-    <div>
-        <input type="submit" value="Login">
+
+    <div id="button-wrapper">
+        <div class="button-container">
+            <md-elevated-button type="submit">Iniciar Sesión</md-elevated-button>
+        </div>
+
+        <div class="button-container">
+            <md-elevated-button type="button" id="register">Registrarse</md-elevated-button>
+
+            <script defer>
+                let boton = document.querySelector("#register")
+                boton.addEventListener("click", function(){window.location.href = "/register"})
+            </script>
+        </div>
     </div>
+</div>
+
 </form>
-</div>
 
-<div>
-    <button id="register">Registrarse</button>
 
-    <script defer>
-        let boton = document.querySelector("#register")
-        boton.addEventListener("click", function(){window.location.href = "/register"})
-    </script>
-</div>
+
+
+
+
 
 @endsection
 

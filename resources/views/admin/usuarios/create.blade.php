@@ -93,7 +93,7 @@
     </div>
 
     <div>
-        <md-elevated-button type="submit">Publicar</md-elevated-button>
+        <md-elevated-button type="submit">Registrar Usuario</md-elevated-button>
     </div>
 
 </form>
