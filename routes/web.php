@@ -48,6 +48,17 @@ Route::post('/register', [UserController::class, 'register']);
 //auth
 
 
+// escritor
+
+Route::get('/escritor/noticias', function () {
+    return view('admin.noticias.noticias');
+})->middleware([CanWrite::class]);
+
+Route::get('/escritor/redactar', function () {
+    return view('admin.noticias.redactar');
+})->middleware([CanWrite::class]);
+
+
 
 // admin
 
@@ -81,7 +92,7 @@ Route::get('/delete', [UserController::class, 'delete'])->middleware([IsAdmin::c
 
 
 //admin - noticias
-Route::get('/admin/noticias/editar', [NewsController::class, 'editorContent'])->middleware(IsAdmin::class);
+Route::get('/admin/noticias/editar', [NewsController::class, 'editorContent'])->middleware([CanWrite::class]);
 
 
 
@@ -91,6 +102,7 @@ Route::post('/edit-noticias', [NewsController::class, 'edit'])->middleware([CanW
 
 Route::post('/upload-image', [UploadController::class, 'upload'])->name('upload-image');
 
+Route::get('/delete-noticias', [NewsController::class, 'delete'])->middleware([CanWrite::class]);
 
 
 // noticias - dinamico

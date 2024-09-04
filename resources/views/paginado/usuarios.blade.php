@@ -11,10 +11,10 @@
                 <table id="user-pagination-table">
                     <thead>
                         <tr class="thead-dark">
-                            <th scope="col">Usuario</th>
-                            <th scope="col">Correo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Correo</th>
                             <th scope="col">Rol</th>
                             <th scope="col">Activo</th>
                             <th scope="col" colspan="2"></th>
@@ -24,10 +24,10 @@
                     <tbody>
                         @foreach($users as $user)
                         <tr>
-                            <td>{{ $user->usuario }}</td>
-                            <td>{{ $user->correo }}</td>
                             <td>{{ $user->nombre }}</td>
                             <td>{{ $user->apellidos }}</td>
+                            <td>{{ $user->usuario }}</td>
+                            <td>{{ $user->correo }}</td>
                             <td>{{ rolText($user->rol) }}</td>
 
                             @if($user->activo == 1)

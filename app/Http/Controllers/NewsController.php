@@ -180,9 +180,15 @@ class NewsController extends Controller
                 'editorData' => 'required',
             ]);
         }
+
+
+        if($request ->has('activo')){
+            $activo = 1;
+        }else{
+            $activo = 0;
+        }
         
         $id = $request->input('idNoticia');
-
 
         $json = json_decode($request->editorData);    
 
@@ -195,6 +201,12 @@ class NewsController extends Controller
         }
 
         if(DB::table('noticias')->where('id', $id)->exists()){
+
+            $affected = DB::table('noticias')
+            ->where('id', $id)
+            ->update(['activo' => $activo]);
+
+
             $noticia = DB::table('noticias')->where('id', $id)->first();
 
             $categoria = $request->input('categoria');
@@ -342,9 +354,32 @@ class NewsController extends Controller
     }
 
     public function delete(){
-        if(isset($_GET['id'])){
+        if(isset($_GET['id']) && $_GET['id'] != ""){
+            $id = $_GET['id'];
             if(DB::table('noticias')->where('id', $id)->exists()){
+                $noticia = DB::table('noticias')->where('id', $id)->first();
+                $catBorrar = DB::table('categorias')->where('id', $noticia->categoria)->first();
+
+
+                $basePath = resource_path() . '/noticias';
+
+                $path = $noticia->multimedia;
+
+                $disk = Storage::build([
+                    'driver' => 'local',
+                    'root' => $path,
+                ]);
+
+                if($disk->has('/noticia.json')){
+                    $disk->delete('/noticia.json');
+                }
+
+
                 File::deleteDirectory($basePath . '/' . Str::slug($catBorrar->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $noticia->slug);
+
+                $deleted = DB::table('noticias')->where('id', $noticia->id)->delete();
+
+                return redirect("/admin/noticias");
             }
         }
     }

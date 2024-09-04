@@ -59,6 +59,18 @@
     </div>
 
 
+    <div class="input-wrapper">
+        <div id="activo-wrapper">
+            <label for="activo" id="label-activo">Activo <span class="requerido">*</span></label>
+
+            @if($datosNoticia->activo == 1)
+                <md-checkbox touch-target="wrapper" name="activo" id="activo" checked></md-checkbox>
+            @else
+                <md-checkbox touch-target="wrapper" name="activo" id="activo"></md-checkbox>
+            @endif
+        </div>
+    </div>
+
 
     <div class="input-wrapper">
         <label for="upload">Imagen Destacada <span class="requerido">*</span></label>

@@ -65,12 +65,8 @@ use Illuminate\Support\Str;
     }
 
     function paginateNoticiasCategoria($categoria){
-        $news = DB::table('noticias')->where('categoria', $categoria)->orderBy('id', 'desc')->paginate(12);
+        $news = DB::table('noticias')->where('categoria', $categoria)->where('activo', 1)->orderBy('id', 'desc')->paginate(12);
         return view('paginado.noticiasCategoria', compact('news'));
-    }
-
-    function paginateBuscador(){
-
     }
 
     function getNewsData($id){
@@ -109,9 +105,22 @@ use Illuminate\Support\Str;
     }
 
 
-    function getNoticiasCategoria(){
+    function getNoticiasActualidad(){
+        $noticias = DB::table('noticias')->where('activo', 1)->orderBy('id', 'desc')->limit(6)->get();
 
+        return $noticias;
     }
 
     
+    function getNoticiasCategoriaPortada($noticiasUsadas, $idCategoria){
+        $noticiasUsadasArray = [];
+
+        foreach($noticiasUsadas as $new){
+            $noticiasUsadasArray[] = $new->id;
+        }
+
+        $noticias = DB::table('noticias')->where('activo', 1)->where('categoria', $idCategoria)->whereNotIn('id', $noticiasUsadasArray)->orderBy('id', 'desc')->limit(6)->get();
+
+        return $noticias;
+    }
 

@@ -46,7 +46,7 @@
                                 </td>
 
                                 <td class="center-td">
-                                    <a href="/delete?id={{ $noticia->id }}">Eliminar</a>
+                                    <a href="/delete-noticias?id={{ $noticia->id }}">Eliminar</a>
                                 </td>
                         
                             </tr>

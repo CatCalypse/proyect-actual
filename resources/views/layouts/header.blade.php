@@ -31,10 +31,16 @@
                         @endif
                         <div id="control-links">
                             @if(getRol() != 3)
-                                <a href="/admin/redactar">Redactar</a>
+                                
                                 @if(getRol() == 1)
-                                    <a href="/admin/usuarios">Usuarios</a>
+                                    <a href="/admin/redactar">Redactar</a>
                                     <a href="/admin/noticias">Noticias</a>
+                                    <a href="/admin/usuarios">Usuarios</a>
+                                @endif
+
+                                @if(getRol() == 2)
+                                    <a href="/escritor/redactar">Redactar</a>
+                                    <a href="/escritor/noticias">Noticias</a>
                                 @endif
                             @endif
                         </div>
