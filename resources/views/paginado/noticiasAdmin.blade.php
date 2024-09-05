@@ -46,7 +46,7 @@
                                 </td>
 
                                 <td class="center-td">
-                                    <a href="/delete-noticias?id={{ $noticia->id }}">Eliminar</a>
+                                    <a href="/delete-noticias?id={{ $noticia->id }}" class="delete" data-confirm="Estas seguro de que quieres eliminar esta noticia?">Eliminar</a>
                                 </td>
                         
                             </tr>
@@ -55,6 +55,8 @@
                 </table>
             </div>
         </div>
+
+        <script src="{{ url('/js/confirmDelete.js')}}"></script>
 
         <div id="pagination-links">
             {{ $news->links() }}

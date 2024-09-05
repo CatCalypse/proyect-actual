@@ -45,7 +45,7 @@
                             </td>
 
                             <td class="center-td">
-                                <a href="/delete?id={{ $user->id }}">Eliminar</a>
+                                <a href="/delete?id={{ $user->id }}" class="delete" data-confirm="Estas seguro de que quieres eliminar este usuario?">Eliminar</a>
                             </td>
                         
                         </tr>
@@ -54,6 +54,8 @@
                 </table>
             </div>
         </div>
+
+        <script src="{{ url('/js/confirmDelete.js')}}"></script>
 
         <div id="pagination-links">
             {{ $users->links('paginado.paginationLinks') }}

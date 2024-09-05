@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" type="image/x-icon" href="{{ url('/assets/NH DIARIO favicon.png')}}">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 
     <title>@yield("title")</title>
 

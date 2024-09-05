@@ -119,8 +119,18 @@ use Illuminate\Support\Str;
             $noticiasUsadasArray[] = $new->id;
         }
 
-        $noticias = DB::table('noticias')->where('activo', 1)->where('categoria', $idCategoria)->whereNotIn('id', $noticiasUsadasArray)->orderBy('id', 'desc')->limit(6)->get();
+        $noticias = DB::table('noticias')->where('activo', 1)->where('categoria', $idCategoria)->whereNotIn('id', $noticiasUsadasArray)->orderBy('id', 'desc')->limit(3)->get();
 
         return $noticias;
+    }
+
+    function getEscritor($id){
+        if(DB::table('usuarios')->where('id', $id)->exists()){
+            $escritor = DB::table('usuarios')->where('id', $id)->first();
+
+            return($escritor);
+        }else{
+            return redirect('/');
+        }
     }
 

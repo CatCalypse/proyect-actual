@@ -20,10 +20,16 @@
 
             <img src="{{$rutaImagen}}" alt="" id="imagen-noticia">
             <div id="contenido">
+            </div>
 
+            <div id="escritor-wrapper">
+                @php($escritor = getEscritor(($noticiaImagen->escritor)))
+                <p id="text-escritor">Escrito por: <b>{{$escritor->nombre}}</b></p>
             </div>
         </div>
     </div>
+
+
 </div>
 
 <script type="module">
@@ -34,7 +40,10 @@
     let html = edjsParser.parse(JSON.parse(newsData.value))
 
     let contenido = document.querySelector('#contenido')
-    contenido.innerHTML = html
+
+    html.forEach((element) => {
+        contenido.innerHTML += element;
+    });
 </script>
 
 @endsection

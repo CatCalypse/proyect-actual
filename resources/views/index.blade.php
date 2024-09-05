@@ -84,7 +84,7 @@
 
 
         
-        <div id="contenido">
+        <div id="contenido-portada">
             <div id="categorias-wrapper">
                 @php ($categorias = getCategorias())
 
@@ -143,7 +143,7 @@
 
             <div id="euronoticias">
                 <h2 class="categoria" id="noticias-europa">NH TV</h2>
-                <div class="video-responsive"><iframe src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCyoGb3SMlTlB8CLGVH4c8Rw&amp;autoplay=1&amp;modestbranding=1&amp;showinfo=0&amp;rel=0&amp;iv_load_policy=3&amp;theme=light" width="100%" height="220" frameborder="0"><br /></iframe></div>
+                <div class="video-responsive"><iframe src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCyoGb3SMlTlB8CLGVH4c8Rw&amp;autoplay=1&mute=1&amp;modestbranding=1&amp;showinfo=0&amp;rel=0&amp;iv_load_policy=3&amp;theme=light" width="100%" height="197" frameborder="0"><br /></iframe></div>
             </div>
         </div>
     </div>
