@@ -53,7 +53,7 @@ class NewsController extends Controller
         $slugBucle = $slug;
         do{
             $slugBucle = $slug . $count;
-            $multimedia = $path . '/' . date('Y') . '/' . date('m') . '/' . $slugBucle;
+            $multimedia = '/noticias/' . date('Y') . '/' . date('m') . '/' . $slugBucle;
             $count ++;
         }while((DB::table('noticias')->where('slug', $slugBucle)->exists()));
 
@@ -299,7 +299,7 @@ class NewsController extends Controller
                    
                 }
 
-                $multimedia = $basePath . '/' . Str::slug($textCategoria->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $slug;
+                $multimedia = '/noticias/' . Str::slug($textCategoria->categoria) . '/' . $noticia->ano . '/' . $noticia->mes . '/' . $slug;
 
                 
                 $affected = DB::table('noticias')
@@ -309,19 +309,21 @@ class NewsController extends Controller
                 'slug' => $slug,
                 'multimedia' => $multimedia]);
 
-                if (! File::exists($multimedia)) {
-                    File::makeDirectory($multimedia);
+                $filePath = $basePath . $multimedia;
+
+                if (! File::exists($filePath)) {
+                    File::makeDirectory($filePath);
         
                     $disk = Storage::build([
                         'driver' => 'local',
-                        'root' => $multimedia,
+                        'root' => $filePath,
                     ]);
                      
                     $disk->put('noticia.json', $request->input('editorData'));
                 }else{
                     $disk = Storage::build([
                         'driver' => 'local',
-                        'root' => $multimedia,
+                        'root' => $filePath,
                     ]);
                      
                     $disk->put('noticia.json', $request->input('editorData'));
@@ -331,9 +333,11 @@ class NewsController extends Controller
             }else{
                 $path = $noticia->multimedia;
 
+                $filePath = resource_path() . $multimedia;
+
                 $disk = Storage::build([
                     'driver' => 'local',
-                    'root' => $path,
+                    'root' => $filePath,
                 ]);
 
                 if($disk->has('/noticia.json')){
@@ -364,6 +368,8 @@ class NewsController extends Controller
                 $basePath = resource_path() . '/noticias';
 
                 $path = $noticia->multimedia;
+
+                $filePath = $basePath . $path;
 
                 $disk = Storage::build([
                     'driver' => 'local',
