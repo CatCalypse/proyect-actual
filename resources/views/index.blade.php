@@ -13,7 +13,6 @@
         <div id="actualidad">
             @php($noticiasActualidad = getNoticiasActualidad())
 
-
             @php($cantidadActualidad = count($noticiasActualidad))
 
             @if($cantidadActualidad == 0)
@@ -21,11 +20,11 @@
             @endif
 
 
-            @php($count = 0)
+            @php($count = 1)
 
             @foreach($noticiasActualidad as $new)
-                @if($count < 2)
-                    @if($count == 0)
+                @if($count < 3)
+                    @if($count == 1)
                         <div id="grande-wrapper">
                     @endif
 
@@ -46,11 +45,11 @@
                         </div>
                     </div>
 
-                    @if($count == 1 || $count == $cantidadActualidad)
+                    @if($count == 2 || $count == $cantidadActualidad)
                         </div>
                     @endif
                 @else
-                    @if($count == 2)
+                    @if($count == 3)
                         <div id="pequeno-wrapper">
                     @endif
                     
@@ -69,7 +68,7 @@
                         </div>
                     </div>
 
-                    @if($count == 5 || $count == $cantidadActualidad)
+                    @if($count == 6 || $count == $cantidadActualidad)
                         </div>
                     @endif
                 @endif
@@ -94,11 +93,11 @@
 
                         @php($noticiasCategoria = getNoticiasCategoriaPortada($noticiasActualidad, $cat->id))
 
-                        @php($count = 0)
+                        @php($count = 1)
 
                         @php($cantidadCategorias = count($noticiasCategoria))
         
-        
+                       
                         @if($cantidadCategorias == 0)
                             <h3>No hay noticias disponibles</h3>
                         @else
@@ -106,12 +105,12 @@
                             @foreach($noticiasCategoria as $new)
                         
 
-                                @if($count == 0)
+                                @if($count == 1)
                                     <div class="categoria-portada">
                                 @endif
 
                                 <div class="noticia-categoria">
-                                @php($rutaImagen = getImageFromStorage($new->destacado))
+                                    @php($rutaImagen = getImageFromStorage($new->destacado))
 
                                     <div class="wrap-imagen">
                                         <a href="/noticias/{{getSlug(getCategoriaText($new->categoria))}}/{{$new->ano}}/{{$new->mes}}/{{$new->slug}}">
@@ -125,14 +124,15 @@
                                         </a>
                                     </div>
                        
-
-                                @if($count == 2 || $count == $cantidadCategorias)
+                                </div>
+                                    
+                                @if($count == 3 || ($count == $cantidadCategorias))
+                                
                                     </div>
                                 @endif
 
                                 @php($count++)
 
-                                </div>
                             @endforeach
 
                         @endif  
@@ -140,7 +140,7 @@
                 @endforeach
 
             </div>
-
+            
             <div id="euronoticias">
                 <h2 class="categoria" id="noticias-europa">NH TV</h2>
                 <div class="video-responsive"><iframe src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCyoGb3SMlTlB8CLGVH4c8Rw&amp;autoplay=1&mute=1&amp;modestbranding=1&amp;showinfo=0&amp;rel=0&amp;iv_load_policy=3&amp;theme=light" width="100%" height="197" frameborder="0"><br /></iframe></div>
