@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'la-xunta-activa-una-campana-para-alertar-sobre-los-riesgos-del-manejo-del-tractor-en-el-rural0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/la-xunta-activa-una-campana-para-alertar-sobre-los-riesgos-del-manejo-del-tractor-en-el-rural0',
+            'multimedia' => '/noticias/local/2024/09/la-xunta-activa-una-campana-para-alertar-sobre-los-riesgos-del-manejo-del-tractor-en-el-rural0',
             'activo' => 1,
         ],[
             'titular' => 'Valentín García agradece el compromiso de Coca-Cola para promover el uso de la lengua',
@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'valentin-garcia-agradece-el-compromiso-de-coca-cola-para-promover-el-uso-de-la-lengua0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/valentin-garcia-agradece-el-compromiso-de-coca-cola-para-promover-el-uso-de-la-lengua0',
+            'multimedia' => '/noticias/local/2024/09/valentin-garcia-agradece-el-compromiso-de-coca-cola-para-promover-el-uso-de-la-lengua0',
             'activo' => 1,
         ],[
             'titular' => 'Tres personas heridas luego de una explosión en un depósito de gas en Ourense',
@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'tres-personas-heridas-luego-de-una-explosion-en-un-deposito-de-gas-en-ourense0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/tres-personas-heridas-luego-de-una-explosion-en-un-deposito-de-gas-en-ourense0',
+            'multimedia' => '/resources/noticias/local/2024/09/tres-personas-heridas-luego-de-una-explosion-en-un-deposito-de-gas-en-ourense0',
             'activo' => 1,
         ],[
             'titular' => 'El programa Vigo Emprega contrata a 75 personas',
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'el-programa-vigo-emprega-contrata-a-75-personas0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/el-programa-vigo-emprega-contrata-a-75-personas0',
+            'multimedia' => '/noticias/local/2024/09/el-programa-vigo-emprega-contrata-a-75-personas0',
             'activo' => 1,
         ],[
             'titular' => 'Debate de investidura de Rueda 9 y 11 de abril, toma de posesión el día 13',
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'debate-de-investidura-de-rueda-9-y-11-de-abril-toma-de-posesion-el-dia-130',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/debate-de-investidura-de-rueda-9-y-11-de-abril-toma-de-posesion-el-dia-130',
+            'multimedia' => '/noticias/local/2024/09/debate-de-investidura-de-rueda-9-y-11-de-abril-toma-de-posesion-el-dia-130',
             'activo' => 1,
         ],[
             'titular' => 'Rueda garantiza que la lucha contra el cambio climático será una prioridad',
@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'rueda-garantiza-que-la-lucha-contra-el-cambio-climatico-sera-una-prioridad0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/rueda-garantiza-que-la-lucha-contra-el-cambio-climatico-sera-una-prioridad0',
+            'multimedia' => '/noticias/local/2024/09/rueda-garantiza-que-la-lucha-contra-el-cambio-climatico-sera-una-prioridad0',
             'activo' => 1,
         ],[
             'titular' => 'Carballo pone en marcha un proyecto de recuperación de variedades autóctonas de árboles frutales',
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'carballo-pone-en-marcha-un-proyecto-de-recuperacion-de-variedades-autoctonas-de-arboles-frutales0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/local/2024/09/carballo-pone-en-marcha-un-proyecto-de-recuperacion-de-variedades-autoctonas-de-arboles-frutales0',
+            'multimedia' => '/noticias/local/2024/09/carballo-pone-en-marcha-un-proyecto-de-recuperacion-de-variedades-autoctonas-de-arboles-frutales0',
             'activo' => 1,
         ],[
             'titular' => 'El Supremo mantiene la orden nacional de detención contra Puigdemont',
@@ -126,7 +126,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'el-supremo-mantiene-la-orden-nacional-de-detencion-contra-puigdemont0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/nacional/2024/09/el-supremo-mantiene-la-orden-nacional-de-detencion-contra-puigdemont0',
+            'multimedia' => '/noticias/nacional/2024/09/el-supremo-mantiene-la-orden-nacional-de-detencion-contra-puigdemont0',
             'activo' => 1,
         ],[
             'titular' => 'Sanidad se compromete a comenzar a reducir las guardias médicas de 24 a 17 horas',
@@ -136,7 +136,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'sanidad-se-compromete-a-comenzar-a-reducir-las-guardias-medicas-de-24-a-17-horas0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/nacional/2024/09/sanidad-se-compromete-a-comenzar-a-reducir-las-guardias-medicas-de-24-a-17-horas0',
+            'multimedia' => '/noticias/nacional/2024/09/sanidad-se-compromete-a-comenzar-a-reducir-las-guardias-medicas-de-24-a-17-horas0',
             'activo' => 1,
         ],[
             'titular' => 'Varios detenidos tras el registro de la casa de Rubiales y de la Federación',
@@ -146,7 +146,7 @@ class DatabaseSeeder extends Seeder
             'mes' => '09',
             'escritor' => '1',
             'slug' => 'varios-detenidos-tras-el-registro-de-la-casa-de-rubiales-y-de-la-federacion0',
-            'multimedia' => '/home/user/proyect-actual/resources/noticias/nacional/2024/09/varios-detenidos-tras-el-registro-de-la-casa-de-rubiales-y-de-la-federacion0',
+            'multimedia' => '/noticias/nacional/2024/09/varios-detenidos-tras-el-registro-de-la-casa-de-rubiales-y-de-la-federacion0',
             'activo' => 1,
         ]
         ]);
